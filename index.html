@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src *; frame-src *; style-src * 'self' 'unsafe-inline' 'unsafe-eval';script-src * 'self' 'unsafe-inline' 'unsafe-eval';" />
+  <title>Estate</title>
+  <script type="text/javascript" src="cordova.js"></script>
+  <script type="text/javascript">
+    var docEl = document.documentElement,
+      resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+      recalc = function () {
+        var clientWidth = docEl.clientWidth;
+        if (!clientWidth) return;
+        docEl.style.fontSize = (clientWidth / 3.6) + 'px'; //3.75是设计图宽/基准尺寸
+        if (clientWidth > 1024) {
+          docEl.style.fontSize = '100px';
+        }
+      };
+    window.addEventListener(resizeEvt, recalc, false);
+    document.addEventListener('DOMContentLoaded', recalc, false);
+
+  </script>
+</head>
+
+<body>
+  <div id="app"></div>
+</body>
+<script>
+  document.addEventListener("deviceready", onDeviceReady, false);
+
+  function onDeviceReady() {
+    window.open = cordova.InAppBrowser.open;
+  }
+
+</script>
+
+
+</html>

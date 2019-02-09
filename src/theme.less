@@ -1,0 +1,187 @@
+/* 
+ *
+ * @复用
+ *
+ */
+
+.warp-pb {
+  /* if有底部菜单的时候 */
+  padding-bottom: 52px;
+}
+
+.main {
+  /* if有头部组件 */
+  width: 100%;
+  padding-top: 30px;
+}
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.row {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.text-overflow {
+  display: block;
+  /*内联对象需加*/
+  width: 100%;
+  word-break: keep-all;
+  /* 不换行 */
+  white-space: nowrap;
+  /* 不换行 */
+  overflow: hidden;
+  /* 内容超出宽度时隐藏超出部分的内容 */
+  text-overflow: ellipsis;
+  /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+}
+
+.relative {
+  position: relative;
+}
+.common-btn {
+  display: inline-block;
+  padding: 6px 12px;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+
+  background-image: none;
+  border: 1px solid transparent;
+}
+.common-inp {
+  background-color: #fff;
+  border: 1px solid #c8c8cc;
+  color: #24292e;
+  font-size: .14rem;
+  line-height: .41rem;
+  min-height: .41rem;
+  outline: none;
+  padding: 0 .12rem;
+  vertical-align: middle;
+}
+/* .header h1 {
+    margin: 0;
+}
+
+.header .mint-button {
+    height: 16px;
+}
+
+.header a {
+    color: inherit;
+}
+
+.header {
+    background-color: #fff;
+    position: fixed !important;
+    top: 0;
+    width: 100%;
+    z-index: 200;
+    height: 30px !important;
+}
+ */
+
+/* 
+ *
+ * @默认
+ *
+ */
+ .ivu-input{
+   border-radius: 0;
+ }
+.van-nav-bar {
+  background-color: #222329;
+  color: #fff;
+  .van-icon {
+    color: #fff;
+  }
+}
+.van-nav-bar__text {
+  color: #fff;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  /* 移动端顺畅滚动 */
+  -webkit-overflow-scrolling: touch;
+}
+
+html {
+  color: #222329;
+  /* 
+      font-family: 'SFNSDisplay-Regular' */
+}
+
+body {
+  user-select: none;
+  font-size: .14rem;
+}
+
+img {
+  object-fit: cover;
+  vertical-align: middle;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+input,
+button,
+select,
+textarea {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  border: none;
+  border-radius: 0;
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+  -webkit-box-shadow: 0 0 0 1000px white inset;
+}
+
+label {
+  font-weight: 300;
+}
+
+.common-btn[disabled] {
+  cursor: not-allowed;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  opacity: 0.65;
+}
+
+.common-btn:active {
+  color: initial;
+  opacity: 0.9;
+}
