@@ -1,11 +1,12 @@
 <template>
   <div id="reques">
-    <van-nav-bar title="Request Repair" left-arrow @click-left="$router.go(-1)"/><!-- right-text="save" -->
-    <template v-if="$store.state.Property.length>1">
+    <van-nav-bar title="Request Repair" left-arrow @click-left="$router.go(-1)"/>
+    <!-- right-text="save" -->
+    <template v-show="PropertyData.length>1">
       <h3>Select Property</h3>
       <van-radio-group v-model="radio">
         <div class="select">
-          <div v-for="(item,index) in $store.state.Property" :key="index">
+          <div v-for="(item,index) in PropertyData" :key="index">
             <img src="@/assets/icons/house.png" alt>
             <div>
               <p>{{item.building_name}}</p>
@@ -14,8 +15,7 @@
             <van-radio :name="item.id" checked-color="#07c160"></van-radio>
           </div>
         </div>
-      </van-radio-group>
-    </template>
+      </van-radio-group> </template> 
     <h3>What do you need to repair</h3>
     <input v-model="facility" type="text" class="common-inp">
     <h3 class="urgency-level">Urgency Level</h3>
@@ -31,10 +31,23 @@
     <h3>Preferred Date and Time</h3>
     <div class="date-time">
       <div>
-        <DatePicker type="datetime" v-model="startTime" format="yyyy-MM-dd HH:mm" placeholder="Select date and time(Excluding seconds)" style="border-radius:0" small></DatePicker>
+        <DatePicker
+          type="datetime"
+          v-model="startTime"
+          format="yyyy-MM-dd HH:mm"
+          placeholder="Start date and time"
+          style="border-radius:0"
+          small
+        ></DatePicker>
       </div>
       <div>
-        <DatePicker type="datetime" v-model="endTime" format="yyyy-MM-dd HH:mm" placeholder="Select date and time(Excluding seconds)" style="border-radius:0"></DatePicker>
+        <DatePicker
+          type="datetime"
+          v-model="endTime"
+          format="yyyy-MM-dd HH:mm"
+          placeholder="End date and time"
+          style="border-radius:0"
+        ></DatePicker>
       </div>
     </div>
     <h3>Contact me before coming
@@ -53,12 +66,44 @@
 </template>
 <script>
 import { POST_Repair } from "@/api/repair";
+import { GET_Property } from "@/api/login";
 export default {
+  data() {
+    return {
+      phone: "",
+      email: "",
+      startTime: "",
+      endTime: "",
+      facility: "",
+      scaleList: [
+        {
+          content: "average"
+        },
+        {
+          content: "urgent"
+        },
+        {
+          content: "super urgent"
+        }
+      ],
+      note: "",
+      radio: "",
+      checked: false,
+      select: "average",
+      PropertyData: []
+    };
+  },
+  created() {
+    GET_Property().then(res => {
+      this.PropertyData = res.data;
+      this.radio=this.PropertyData[0].id
+    });
+  },
   methods: {
     submit() {
-      if(this.facility==''){
+      if (this.facility == "") {
         this.$toast(`Need to complete facility!`);
-          return;
+        return;
       }
       if (this.checked == true) {
         if (!this.phone || !this.email) {
@@ -92,48 +137,29 @@ export default {
         property_id: this.radio,
         facility: this.facility,
         level,
-        starttime: new Date(this.startTime).toISOString().replace("T", " ").replace(/\..+$/,""),
-        endtime: new Date(this.endTime).toISOString().replace("T", " ").replace(/\..+$/,""),
+        starttime: new Date(this.startTime)
+          .toISOString()
+          .replace("T", " ")
+          .replace(/\..+$/, ""),
+        endtime: new Date(this.endTime)
+          .toISOString()
+          .replace("T", " ")
+          .replace(/\..+$/, ""),
         confirm: this.checked ? 1 : 0,
         phone: this.phone,
         email: this.email,
         note: this.note
       };
       POST_Repair(data).then(res => {
-        this.$toast(res.data.msg)
-        if(res.data.status=="ok"){
+        this.$toast(res.data.msg);
+        if (res.data.status == "ok") {
           this.$router.push({
-            name:'RequestList'
+            name: "RequestList"
           });
         }
       });
     }
-  },
-  created() {},
-  data() {
-    return {
-      phone:'',
-      email:'',
-      startTime:'',
-      endTime:'',
-      facility: "",
-      note: "",
-      radio: this.$store.state.Property[0].id,
-      checked: false,
-      scaleList: [
-        {
-          content: "average"
-        },
-        {
-          content: "urgent"
-        },
-        {
-          content: "super urgent"
-        }
-      ],
-      select: "average"
-    };
-  }
+  } 
 };
 </script>
 <style lang="less" scoped>
@@ -162,12 +188,12 @@ export default {
     font-size: 0.15rem;
   }
   .date-time {
-    &>div{
-      &+div{
-        margin-top: .1rem;
+    & > div {
+      & + div {
+        margin-top: 0.1rem;
       }
     }
-    font-size: .12rem;
+    font-size: 0.12rem;
   }
   .line {
     height: 0.02rem;

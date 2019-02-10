@@ -2,35 +2,43 @@
   <div id="propertyList">
     <van-nav-bar title="My Property" left-arrow @click-left="$router.go(-1)"/>
     <section v-for="(item,index) in propertyList" :key="index">
-    {{item.room_number}} <span>{{item.building_name}}</span>
+      {{item.room_number}}
+      <span>{{item.building_name}}</span>
     </section>
   </div>
 </template>
 
 <script>
+import { GET_Property } from "@/api/login";
 export default {
-    computed:{
-        propertyList(){
-            return this.$store.state.Property;
-        }
-    }
+  data() {
+    return {
+      propertyList: []
+    };
+  },
+  created(){
+    
+    GET_Property().then(res => {
+      this.propertyList = res.data;
+    });
+  }
 };
 </script>
 
 <style lang="less" scoped>
-#propertyList{
-  section{
+#propertyList {
+  section {
     display: flex;
     align-items: center;
     background-color: #ed8482;
-    border-radius: .04rem;
-    height: .48rem;
-    margin: .2rem .15rem;
-    padding: 0 .2rem;
+    border-radius: 0.04rem;
+    height: 0.48rem;
+    margin: 0.2rem 0.15rem;
+    padding: 0 0.2rem;
     color: #fff;
     font-weight: 600;
-    span{
-      padding-left: .15rem;
+    span {
+      padding-left: 0.15rem;
     }
   }
 }

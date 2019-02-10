@@ -84,7 +84,6 @@
 </template>
 
 <script>
-import { GET_Property } from "@/api/login";
 import { GET_Notice } from "@/api/notice";
 
 export default {
@@ -104,9 +103,6 @@ export default {
     }
   },
   created() {
-    GET_Property().then(res => {
-      this.$store.commit("setProperty", res.data);
-    });
     GET_Notice()
       .then(res => {
         this.noticeData = res.data.msg;
@@ -119,7 +115,7 @@ export default {
 <style lang="less" scoped>
 #home {
   .main {
-    padding: 0.19rem 0.15rem 0;
+    padding: 0.2rem 0.15rem 0;
 
     .user {
       text-align: center;
@@ -134,7 +130,7 @@ export default {
 
     .home-pic {
       text-align: center;
-      margin-top: 0.18rem;
+      margin-top: 0.15rem;
 
       img {
         height: 1.3rem;
@@ -180,7 +176,7 @@ export default {
   }
 
   .subnav {
-    height: 0.71rem;
+    height: 0.7rem;
     line-height: 1;
     color: #fab701;
     display: flex;
@@ -202,10 +198,10 @@ export default {
   .header {
     position: relative;
     width: 100%;
-    height: 2.551rem;
+    height: 2.4rem;
     background: #ddd;
     color: #fff;
-    padding-top: 0.28rem;
+    padding-top: 0.15rem;
 
     .main {
       padding: 0.15rem;
@@ -258,7 +254,7 @@ export default {
 
       .hint {
         position: absolute;
-        top: 0.28rem;
+        top: 0.15rem;
         right: 0.32rem;
         & /deep/ .ivu-badge-count {
           top: -0.05rem;

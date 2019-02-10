@@ -5,10 +5,15 @@
       <h3>Request date</h3>
 
       <DatePicker
-        type="daterange"
-        v-model="date"
-        split-panels
-        placeholder="Select date"
+        type="date"
+        v-model="date1"
+        placeholder="Select start date"
+        style="width: 200px;font-size:.12rem;height:.41rem;"
+      ></DatePicker>
+      <DatePicker
+        type="date"
+        v-model="date2"
+        placeholder="Select end date"
         style="width: 200px;font-size:.12rem;height:.41rem;"
       ></DatePicker>
       <div>I Need
@@ -46,12 +51,13 @@ export default {
       phoneNumber: "",
       email: "",
       note: "",
-      date: []
+      date1: '',
+      date2:''
     };
   },
   methods: {
     submit() {
-      if (!this.date) {
+      if (!this.date1) {
         this.$toast("date required");
         return;
       }
@@ -59,11 +65,11 @@ export default {
         this.$toast("number required");
         return;
       }
-      let start= this.date[0].toLocaleDateString();
+     
       let data = {
         number: this.number,
-        start: start.replace(/\//g, "-"),
-        end: this.date[1].toLocaleDateString().replace(/\//g, "-"),
+        start: `${this.date1.getFullYear()}-${this.date1.getMonth()+1}-${this.date1.getDate()}`,
+        end:`${this.date2.getFullYear()}-${this.date2.getMonth()+1}-${this.date2.getDate()}`,
         note: `${this.note},${this.Registration}`,
         mgr_id:1,
       };

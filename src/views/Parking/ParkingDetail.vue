@@ -52,7 +52,7 @@ export default {
     CancelItem() {
       this.$dialog
         .confirm({
-          message: "Confirm this operation?"
+          title: "Confirm this operation?"
         })
         .then(() => {
           let data = {
@@ -76,7 +76,7 @@ export default {
     DeleteItem() {
       this.$dialog
         .confirm({
-          message: "Are you sure you want to delete this data?"
+          title: "Delete confirmation"
         })
         .then(() => {
           let data = {

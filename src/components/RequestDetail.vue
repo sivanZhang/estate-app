@@ -5,7 +5,8 @@
     <div class="detail">
       <div class="header">
         <div class="title">{{`Repair - ${AjaxData.facilities}`}}</div>
-        {{AjaxData.start|FDate}}-{{AjaxData.end|FDate}} {{AjaxData.start|FTime}} - {{AjaxData.end|FTime}}
+        {{AjaxData.start}} To {{AjaxData.end}}
+        <p>{{`Ticket No.${AjaxData.code}`}}</p> 
       </div>
       <div class="content">
         <div class="item">Address
@@ -52,7 +53,7 @@ export default {
     CancelItem() {
       this.$dialog
         .confirm({
-          message: "Confirm this operation?"
+          title: "Confirm this operation?"
         })
         .then(() => {
           let data = {
@@ -76,7 +77,7 @@ export default {
     DeleteItem() {
       this.$dialog
         .confirm({
-          message: "Are you sure you want to delete this data?"
+          title: "Delete confirmation"
         })
         .then(() => {
           let data = {
@@ -183,7 +184,7 @@ export default {
         font-size: 0.15rem;
       }
       padding: 0.15rem;
-      height: 0.78rem;
+      min-height: 0.78rem;
       background-color: #fad87b;
     }
     margin: 0 0.08rem;

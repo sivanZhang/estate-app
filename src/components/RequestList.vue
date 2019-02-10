@@ -19,14 +19,12 @@
         :key="index"
         @click="$router.push({name:'RequestDetail',params:{rid:item.pk,query:item.fields.status}})"
       >
-        <div class="date">{{new Date(item.fields.date).toDateString()}}</div>
+        <div class="date" v-text="item.fields.date"></div>
         <div class="detail">
           <div class="content">
             <div class="title">{{item.fields.code}}</div>
             <p>{{item.fields.facilities}}</p>
-            <div
-              class="time"
-            >{{item.fields.prefertime_start|FDate}}-{{item.fields.prefertime_end|FDate}} {{item.fields.prefertime_start|FTime}}-{{item.fields.prefertime_end|FTime}}</div>
+            <div class="time">{{item.fields.prefertime_start}} to {{item.fields.prefertime_end}}</div>
           </div>
           <div class="operation">
             <div
@@ -50,7 +48,7 @@
         :key="index"
         @click="$router.push({name:'RequestDetail',params:{rid:item.pk}})"
       >
-        <div class="date">{{new Date(item.fields.date).toDateString()}}</div>
+        <div class="date" v-text="item.fields.date"></div>
         <div class="detail">
           <div class="content">
             <div class="title">{{item.fields.code}}</div>
@@ -64,7 +62,7 @@
             <div
               :class="[{ongoing:item.fields.status==0},{accept:item.fields.status==1},{declined:item.fields.status==2},{cancel:item.fields.status==3}]"
             >{{item.fields.status|PStatus}}</div>
-            <template v-if="item.fields.status==1">
+            <template v-if="item.fields.status==0">
               <div class="draft">cancel</div>
             </template>
             <template v-else>
@@ -131,7 +129,7 @@ export default {
     deleteParking(id) {
       this.$dialog
         .confirm({
-          message: "Are you sure you want to delete this data?"
+          title: "Delete confirmation"
         })
         .then(() => {
           let data = {
@@ -154,7 +152,7 @@ export default {
     deleteRepair(repair_id) {
       this.$dialog
         .confirm({
-          message: "Are you sure you want to delete this data?"
+          title: "Delete confirmation"
         })
         .then(() => {
           let data = {
@@ -186,7 +184,10 @@ export default {
       }
       if (name == "Parking") {
         GET_Parking().then(res => {
-          this.ParkingData = res.data.msg;
+          this.ParkingData = Object.assign({}, res.data.msg);
+          this.ParkingData.forEach(item => {
+            item.fields.date = new Date(item.fields.date).toDateString();
+          });
         });
       }
     },
@@ -203,7 +204,10 @@ export default {
         });
       } else if (this.activeKey == "Parking") {
         GET_Parking(params).then(res => {
-          this.ParkingData = res.data.msg;
+          this.ParkingData = Object.assign({}, res.data.msg);
+          this.ParkingData.forEach(item => {
+            item.fields.date = new Date(item.fields.date).toDateString();
+          });
         });
       } else {
         return;
@@ -214,7 +218,10 @@ export default {
         this.AjaxData = res.data.msg;
       });
       GET_Parking().then(res => {
-        this.ParkingData = res.data.msg;
+        this.ParkingData = Object.assign({}, res.data.msg);
+        this.ParkingData.forEach(item => {
+          item.fields.date =new Date(item.fields.date).toDateString();
+        });
       });
     }
   },
