@@ -12,22 +12,18 @@ let Ajax = axios.create({
   //生产环境API
   baseURL: isPro ? 'https://levy.chidict.com/' : 'api/',
   timeout: 10000,
- /*  responseType: "json",
-  withCredentials: true, // 是否允许带cookie这些
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
-  }, */
   transformRequest: [data => {
     // 对 data 进行任意转换处理
     return qs.stringify(data);
   }],
 });
+let token = store.state.estateToken || localStorage.estateToken;
+// 设置post请求头
+Ajax.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 Ajax.interceptors.request.use(
   config => {
     Toast.loading();
-    if (store.state.estateToken || localStorage.estateToken) {
-      config.headers.Authorization = store.state.estateToken || localStorage.getItem('estateToken');
-    }
+    token && (config.headers.Authorization = token);
     return config;
   },
   err => {
@@ -39,18 +35,62 @@ Ajax.interceptors.request.use(
 Ajax.interceptors.response.use(
   response => {
     Toast.clear();
-    return response;
+    console.log(response.status, '响应代码')
+    if (response.status == 302) {
+      console.log('正确响应拦截302');
+      Toast({
+        message: `Need login
+            error:302`,
+      });
+      store.commit('setToken', '');
+      router.replace({
+        path: '/login',
+        query: {
+          redirect: router.currentRoute.fullPath
+        }
+      })
+    } else {
+      return response;
+    }
+
   },
   error => {
     Toast.clear();
     if (error.response) {
       switch (error.response.status) {
         case 302:
+          console.log('错误响应拦截302');
           Toast({
-            message: `Need login
-            error:302`,
+            message: `未登录
+            error: 302 `,
           });
-          store.commit('setToken','');
+          router.replace({
+            path: '/login',
+            query: {
+              redirect: router.currentRoute.fullPath
+            }
+          })
+          break;
+        case 401:
+          console.log('错误响应拦截401，未登录？');
+          Toast({
+            message: `未登录
+            error: 401 `,
+          });
+          router.replace({
+            path: '/login',
+            query: {
+              redirect: router.currentRoute.fullPath
+            }
+          })
+          break;
+        case 403:
+          console.log('错误响应拦截403,过期？');
+          Toast({
+            message: `登录过期，请重新登录
+            error: 403`,
+          });
+          store.commit('setToken', null);
           router.replace({
             path: '/login',
             query: {

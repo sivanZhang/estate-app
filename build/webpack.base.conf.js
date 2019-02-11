@@ -22,10 +22,14 @@ module.exports = {
     },
     resolve: {
         extensions: ['.js', '.vue', '.json'],
+        // alias: {
+        //     'vue$': 'vue/dist/vue.esm.js',
+        //     '@': resolve('src'),
+        // }
         alias: {
-            'vue$': 'vue/dist/vue.esm.js',
-            '@': resolve('src'),
-            'jquery': path.resolve(__dirname, '../node_modules/jquery/src/jquery')
+          '@': resolve('src'),
+          'less': resolve('src/assets/less'),
+          'vue$': 'vue/dist/vue.js'
         }
     },
     module: {
