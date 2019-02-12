@@ -14,7 +14,7 @@
 export default {
     methods:{
         LogOut(){
-            this.$store.commit("setToken", ``);
+            this.$store.commit("setToken",null);
             this.$toast('Logged out');
             this.$router.push('/home');
         }

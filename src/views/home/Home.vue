@@ -5,7 +5,7 @@
         <div class="hint">
           <template v-if="noticeData.length>0">
             <Badge :count="noticeData.length" overflow-count="9">
-              <img @click.native="target" src="@/assets/icons/bell.png" alt>
+              <img @click="target" src="@/assets/icons/bell.png" alt>
             </Badge>
           </template>
           <template v-else>

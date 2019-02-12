@@ -5,8 +5,7 @@ import router from '@/router'
 import {
   Toast
 } from "vant";
-
-
+Toast.allowMultiple();
 const isPro = Object.is(process.env.NODE_ENV, 'production');
 let Ajax = axios.create({
   //生产环境API
@@ -17,24 +16,25 @@ let Ajax = axios.create({
     return qs.stringify(data);
   }],
 });
-let token = store.state.estateToken || localStorage.estateToken;
 // 设置post请求头
 Ajax.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+let toastLoading = '';
 Ajax.interceptors.request.use(
   config => {
-    Toast.loading();
+    let token = store.state.estateToken || localStorage.estateToken;
+    toastLoading = Toast.loading();
     token && (config.headers.Authorization = token);
     return config;
   },
   err => {
-    Toast.clear();
+    toastLoading.clear();
     return Promise.reject(err);
   });
 
 
 Ajax.interceptors.response.use(
   response => {
-    Toast.clear();
+    toastLoading.clear();
     return response;
   },
   error => {
