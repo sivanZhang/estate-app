@@ -6,17 +6,17 @@ import { Toast } from "vant";
 Vue.use(Router);
 const ROUTER = new Router({
     routes,
-    /* mode: 'history', */
 });
 //进入页面时候的登陆拦截
 ROUTER.beforeEach((to, from, next) => {
     window.document.title = to.name || 'Estate';
     if (to.matched.some(r => r.meta.requireAuth)) {
-        if (store.state.estateToken || localStorage.getItem('estateToken')) {
+        let token = store.state.estateToken || localStorage.getItem('estateToken');
+        if (token) {
             next();
         } else {
             Toast({
-                message: "Please login first",
+                message: "Not logged in",
             });
             next({
                 path: '/login',

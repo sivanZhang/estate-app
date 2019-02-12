@@ -35,46 +35,15 @@ Ajax.interceptors.request.use(
 Ajax.interceptors.response.use(
   response => {
     Toast.clear();
-    console.log(response.status, '响应代码')
-    if (response.status == 302) {
-      console.log('正确响应拦截302');
-      Toast({
-        message: `Need login
-            error:302`,
-      });
-      store.commit('setToken', '');
-      router.replace({
-        path: '/login',
-        query: {
-          redirect: router.currentRoute.fullPath
-        }
-      })
-    } else {
-      return response;
-    }
-
+    return response;
   },
   error => {
     Toast.clear();
     if (error.response) {
       switch (error.response.status) {
-        case 302:
-          console.log('错误响应拦截302');
-          Toast({
-            message: `未登录
-            error: 302 `,
-          });
-          router.replace({
-            path: '/login',
-            query: {
-              redirect: router.currentRoute.fullPath
-            }
-          })
-          break;
         case 401:
-          console.log('错误响应拦截401，未登录？');
           Toast({
-            message: `未登录
+            message: `Please login first
             error: 401 `,
           });
           router.replace({
@@ -85,9 +54,8 @@ Ajax.interceptors.response.use(
           })
           break;
         case 403:
-          console.log('错误响应拦截403,过期？');
           Toast({
-            message: `登录过期，请重新登录
+            message: `Please login first
             error: 403`,
           });
           store.commit('setToken', null);

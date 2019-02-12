@@ -9,7 +9,7 @@
             </Badge>
           </template>
           <template v-else>
-            <img @click.native="target" src="@/assets/icons/bell.png" alt>
+            <img @click="target" src="@/assets/icons/bell.png" alt>
           </template>
         </div>
       </div>
@@ -198,17 +198,17 @@ export default {
   .header {
     position: relative;
     width: 100%;
-    height: 2.4rem;
+    height: 2rem;
     background: #ddd;
     color: #fff;
     padding-top: 0.15rem;
 
     .main {
-      padding: 0.15rem;
+      padding: 0.12rem;
     }
 
     .main-nav {
-      margin-top: 0.45rem;
+      margin-top: 0.3rem;
       display: flex;
       justify-content: space-around;
 
