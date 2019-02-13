@@ -124,7 +124,7 @@ export default {
           return "Completed";
           break;
         case 3:
-          return "Cancel";
+          return "Canceled";
           break;
       }
     }

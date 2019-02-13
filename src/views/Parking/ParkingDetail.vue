@@ -37,7 +37,7 @@
   </div>
 </template>
 <script>
-import { GET_Repair, POST_Repair } from "@/api/repair";
+import { GET_Parking, POST_Parking } from "@/api/paking";
 export default {
   filters: {
     FDate(val) {
@@ -114,16 +114,16 @@ export default {
     title() {
       switch (this.$route.params.query) {
         case 0:
-          return "Draft";
-          break;
-        case 1:
           return "Ongoing";
           break;
+        case 1:
+          return "Accept";
+          break;
         case 2:
-          return "Completed";
+          return "Decline";
           break;
         case 3:
-          return "Cancel";
+          return "Canceled";
           break;
       }
     }
@@ -135,9 +135,9 @@ export default {
   },
   created() {
     let params = {
-      repair_id: this.$route.params.rid
+      id: this.$route.params.rid
     };
-    GET_Repair(params).then(res => {
+    GET_Parking(params).then(res => {
       this.AjaxData = res.data.msg;
     });
   }
