@@ -1,6 +1,13 @@
 <template>
   <div>
-    <van-nav-bar title="Reserve Parking Spot" left-arrow @click-left="$router.go(-1)"/>
+    <van-nav-bar
+      title="Reserve Parking Spot"
+      left-arrow
+      @click-left="$router.go(-1)"
+      @click-right="toList"
+    >
+      <van-icon name="description" slot="right"/>
+    </van-nav-bar>
     <div class="container">
       <h3>Request date</h3>
 
@@ -17,7 +24,11 @@
         style="width: 200px;font-size:.12rem;height:.41rem;"
       ></DatePicker>
       <div>I Need
-        <InputNumber v-model="number" :min="1" style="width: 1.3rem;border-radius:0;margin:0 .1rem"/>parking spot
+        <InputNumber
+          v-model="number"
+          :min="1"
+          style="width: 1.3rem;border-radius:0;margin:0 .1rem"
+        />parking spot
       </div>
       <h3>Vehicle Registration No.</h3>
       <div class="inputGroup">
@@ -26,11 +37,11 @@
           v-model="value"
           placeholder="Enter something..."
           style="width: 100%;margin-top: .12rem;"
-        /> -->
+        />-->
       </div>
       <!-- <h3>Contact Details</h3>
       <input type="input" class="inp" v-model="phoneNumber" placeholder="Phone Number">
-      <input type="email" class="inp" v-model="email" placeholder="Email"> -->
+      <input type="email" class="inp" v-model="email" placeholder="Email">-->
       <h3 class="note">
         Note
         <span>(optional)</span>
@@ -51,11 +62,17 @@ export default {
       phoneNumber: "",
       email: "",
       note: "",
-      date1: '',
-      date2:''
+      date1: "",
+      date2: ""
     };
   },
   methods: {
+    toList() {
+      this.$store.commit("setListType", "Parking");
+      this.$router.push({
+        name: "RequestList"
+      });
+    },
     submit() {
       if (!this.date1) {
         this.$toast("date required");
@@ -65,19 +82,22 @@ export default {
         this.$toast("number required");
         return;
       }
-     
+
       let data = {
         number: this.number,
-        start: `${this.date1.getFullYear()}-${this.date1.getMonth()+1}-${this.date1.getDate()}`,
-        end:`${this.date2.getFullYear()}-${this.date2.getMonth()+1}-${this.date2.getDate()}`,
+        start: `${this.date1.getFullYear()}-${this.date1.getMonth() +
+          1}-${this.date1.getDate()}`,
+        end: `${this.date2.getFullYear()}-${this.date2.getMonth() +
+          1}-${this.date2.getDate()}`,
         note: `${this.note},${this.Registration}`,
-        mgr_id:1,
+        mgr_id: 1
       };
       POST_Parking(data).then(res => {
         if (res.data.status == "ok") {
           this.$toast.success(res.data.msg);
+          this.$store.commit("setListType", "Parking");
           this.$router.push({
-            name:'RequestList'
+            name: "RequestList"
           });
         } else {
           this.$toast.fail(res.data.msg);

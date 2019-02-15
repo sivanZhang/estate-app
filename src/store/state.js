@@ -2,6 +2,7 @@ export default {
     estateToken: '',
     user_name: '',
     portrait: '',
-    Property:[],
-    Total:'',
+    Property: [],
+    Total: '',
+    ListType: '',
 }

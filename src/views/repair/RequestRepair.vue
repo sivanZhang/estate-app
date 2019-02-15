@@ -1,6 +1,13 @@
 <template>
   <div id="reques">
-    <van-nav-bar title="Request Repair" left-arrow @click-left="$router.go(-1)"/>
+    <van-nav-bar
+      title="Request Repair"
+      left-arrow
+      @click-left="$router.go(-1)"
+      @click-right="toList"
+    >
+      <van-icon name="description" slot="right"/>
+    </van-nav-bar>
     <!-- right-text="save" -->
     <template v-show="PropertyData.length>1">
       <h3>Select Property</h3>
@@ -15,7 +22,8 @@
             <van-radio :name="item.id" checked-color="#07c160"></van-radio>
           </div>
         </div>
-      </van-radio-group> </template> 
+      </van-radio-group>
+    </template>
     <h3>What do you need to repair</h3>
     <input v-model="facility" type="text" class="common-inp">
     <h3 class="urgency-level">Urgency Level</h3>
@@ -96,10 +104,16 @@ export default {
   created() {
     GET_Property().then(res => {
       this.PropertyData = res.data;
-      this.radio=this.PropertyData[0].id
+      this.radio = this.PropertyData[0].id;
     });
   },
   methods: {
+    toList() {
+      this.$store.commit('setListType','activeKey')
+      this.$router.push({
+        name: "RequestList"
+      });
+    },
     submit() {
       if (this.facility == "") {
         this.$toast(`Need to complete facility!`);
@@ -153,13 +167,14 @@ export default {
       POST_Repair(data).then(res => {
         this.$toast(res.data.msg);
         if (res.data.status == "ok") {
+          this.$store.commit('setListType','activeKey')
           this.$router.push({
             name: "RequestList"
           });
         }
       });
     }
-  } 
+  }
 };
 </script>
 <style lang="less" scoped>

@@ -4,30 +4,39 @@
     <h3 class="container">{{title}}</h3>
     <div class="detail">
       <div class="header">
-        <div class="title">{{`Repair - ${AjaxData.facilities}`}}</div>
+        <div class="title">{{`Reserve Parking Spots`}}</div>
         {{AjaxData.start|FDate}}-{{AjaxData.end|FDate}} {{AjaxData.start|FTime}} - {{AjaxData.end|FTime}}
+        <p>{{`Ticket No.${AjaxData.code}`}}</p>
       </div>
       <div class="content">
-        <div class="item">Address
-          <div class="blod">{{AjaxData.building}}</div>
+        <div class="item">Reservation
+          <div class="blod">{{`${AjaxData.number} Parking spots`}}</div>
         </div>
-        <div class="item">Urgency Level
-          <div class="blod">{{level}}</div>
+        <div class="item">Vehicle Registration No.
+          <div class="blod"></div>
         </div>
         <div class="item">
           <div class="title">Contact me before coming</div>
-          <div class="blod">Phone {{AjaxData.phone}}</div>
-          <div class="blod">Email {{AjaxData.email}}</div>
+          <div class="blod">Phone 435666777</div>
+          <div class="blod">Email 123@gmail.com</div>
         </div>
         <div class="item">Note
           <div class="blod">{{AjaxData.note}}</div>
         </div>
         <div class="item">
           <div>Submitted</div>
-          <div class="blod">{{AjaxData.end}}</div>
+          <div class="blod">
+            {{AjaxData.modify_date | FDate
+            }}{{AjaxData.modify_date | FTime
+            }}
+          </div>
+        </div>
+        <div class="item">
+          <div class="title">Reply</div>
+          <div>{{replyData}}</div>
         </div>
       </div>
-      <template v-if="$route.params.query==1">
+      <template v-if="$route.params.query==0">
         <div @click="CancelItem" class="footer">Cancel</div>
       </template>
       <template v-else>
@@ -38,6 +47,7 @@
 </template>
 <script>
 import { GET_Parking, POST_Parking } from "@/api/paking";
+import { GET_Reply, POST_Reply } from "@/api/notice";
 export default {
   filters: {
     FDate(val) {
@@ -56,11 +66,11 @@ export default {
         })
         .then(() => {
           let data = {
-            repair_id: this.$route.params.rid,
+            id: this.$route.params.rid,
             method: "put",
             status: 3
           };
-          POST_Repair(data).then(res => {
+          POST_Parking(data).then(res => {
             if (res.data.status == "ok") {
               this.$toast.success(res.data.msg);
               this.$router.push("/requestList");
@@ -80,10 +90,10 @@ export default {
         })
         .then(() => {
           let data = {
-            repair_id: this.$route.params.rid,
+            id: this.$route.params.rid,
             method: "delete"
           };
-          POST_Repair(data).then(res => {
+          POST_Parking(data).then(res => {
             if (res.data.status == "ok") {
               this.$toast.success(res.data.msg);
               this.$router.push("/requestList");
@@ -130,25 +140,25 @@ export default {
   },
   data() {
     return {
-      AjaxData: {}
+      AjaxData: {},
+      replyData:''
     };
   },
   created() {
     let params = {
-      id: this.$route.params.rid
-    };
+        id: this.$route.params.rid
+      },
+      reolyParams = {
+        task_type:'1',
+        task_id:this.$route.params.rid,
+      };
     GET_Parking(params).then(res => {
-      this.AjaxData = res.data.msg;
+      this.AjaxData = res.data;
+    });
+    GET_Reply(reolyParams).then(res => {
+      this.replyData = res.data;
     });
   }
-  /* beforeRouteEnter (to, from, next) {
-    next(vm=>{
-
-    })
-  },
-  beforeRouteLeave (to, from, next) {
-    doument.
-  } */
 };
 </script>
 <style lang="less" scoped>
@@ -183,7 +193,7 @@ export default {
         font-size: 0.15rem;
       }
       padding: 0.15rem;
-      height: 0.78rem;
+      min-height: 0.78rem;
       background-color: #fad87b;
     }
     margin: 0 0.08rem;

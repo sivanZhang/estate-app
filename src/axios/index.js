@@ -3,71 +3,64 @@ import store from '@/store'
 import qs from 'qs'
 import router from '@/router'
 import {
-  Toast
+    Toast
 } from "vant";
-Toast.allowMultiple();
 const isPro = Object.is(process.env.NODE_ENV, 'production');
 let Ajax = axios.create({
-  //生产环境API
-  baseURL: isPro ? 'https://levy.chidict.com/' : 'api/',
-  timeout: 10000,
-  transformRequest: [data => {
-    // 对 data 进行任意转换处理
-    return qs.stringify(data);
-  }],
+    //生产环境API
+    baseURL: isPro ? 'https://levy.chidict.com/' : 'api/',
+    timeout: 10000,
+    transformRequest: [data => {
+        // 对 data 进行任意转换处理
+        return qs.stringify(data);
+    }],
 });
 // 设置post请求头
 Ajax.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-let toastLoading = '';
 Ajax.interceptors.request.use(
-  config => {
-    let token = store.state.estateToken || localStorage.estateToken;
-    toastLoading = Toast.loading();
-    token && (config.headers.Authorization = token);
-    return config;
-  },
-  err => {
-    toastLoading.clear();
-    return Promise.reject(err);
-  });
-
-
+    config => {
+        let token = store.state.estateToken || localStorage.estateToken;
+        token && (config.headers.Authorization = token);
+        return config;
+    },
+    err => {
+        return Promise.reject(err);
+    });
 Ajax.interceptors.response.use(
-  response => {
-    toastLoading.clear();
-    return response;
-  },
-  error => {
-    Toast.clear();
-    if (error.response) {
-      switch (error.response.status) {
-        case 401:
-          Toast({
-            message: `Please login first
+    response => {
+        return response;
+    },
+    error => {
+        Toast.clear();
+        if (error.response) {
+            switch (error.response.status) {
+                case 401:
+                    Toast({
+                        message: `Please login first
             error: 401 `,
-          });
-          router.replace({
-            path: '/login',
-            query: {
-              redirect: router.currentRoute.fullPath
-            }
-          })
-          break;
-        case 403:
-          Toast({
-            message: `Please login first
+                    });
+                    router.replace({
+                        path: '/login',
+                        query: {
+                            redirect: router.currentRoute.fullPath
+                        }
+                    })
+                    break;
+                case 403:
+                    Toast({
+                        message: `Please login first
             error: 403`,
-          });
-          store.commit('setToken', null);
-          router.replace({
-            path: '/login',
-            query: {
-              redirect: router.currentRoute.fullPath
+                    });
+                    store.commit('setToken', null);
+                    router.replace({
+                        path: '/login',
+                        query: {
+                            redirect: router.currentRoute.fullPath
+                        }
+                    })
+                    break;
             }
-          })
-          break;
-      }
-    }
-    return Promise.reject(error.response.data) // 返回接口返回的错误信息
-  });
+        }
+        return Promise.reject(error.response.data) // 返回接口返回的错误信息
+    });
 export default Ajax;

@@ -83,7 +83,33 @@
 <script>
 import { GET_Repair, POST_Repair } from "@/api/repair";
 import { GET_Parking, POST_Parking } from "@/api/paking";
+import { close } from 'fs';
 export default {
+  data() {
+    return {
+      searchVal: "",
+      activeKey: "Repair",
+      AjaxData: [],
+      ParkingData: [],
+      menuList: [
+        {
+          name: "Repair",
+          src: require("@/assets/icons/garage-wrenches-grey.png"),
+          activeSrc: require("@/assets/icons/garage-wrenches.png")
+        },
+        {
+          name: "Amenity",
+          src: require("@/assets/icons/barbecue-grey.png"),
+          activeSrc: require("@/assets/icons/barbecue.png")
+        },
+        {
+          name: "Parking",
+          src: require("@/assets/icons/parked-car-grey.png"),
+          activeSrc: require("@/assets/icons/parked_car.png")
+        }
+      ]
+    };
+  },
   filters: {
     FDate(val) {
       let arr = new Date(val).toDateString().split(/\s/g);
@@ -136,7 +162,7 @@ export default {
       if (this.activeKey == "Repair") {
         this.$router.push("/repair/request-repair");
       } else if (this.activeKey == "Parking") {
-        this.$router.push('/Parking/ReserveParkingSpot');
+        this.$router.push("/Parking/ReserveParkingSpot");
       }
     },
     deleteParking(id) {
@@ -192,15 +218,12 @@ export default {
     getItem(name) {
       if (name == "Repair") {
         GET_Repair().then(res => {
-          this.AjaxData = res.data.msg;
+          this.AjaxData = [...res.data.msg];
         });
       }
       if (name == "Parking") {
         GET_Parking().then(res => {
-          this.ParkingData = Object.assign({}, res.data.msg);
-          this.ParkingData.forEach(item => {
-            item.fields.date = new Date(item.fields.date).toDateString();
-          });
+          this.ParkingData = [...res.data.msg];
         });
       }
     },
@@ -213,14 +236,13 @@ export default {
       };
       if (this.activeKey == "Repair") {
         GET_Repair(params).then(res => {
-          this.AjaxData = res.data.msg;
+          this.AjaxData = [...res.data.msg];
+          
         });
       } else if (this.activeKey == "Parking") {
         GET_Parking(params).then(res => {
-          this.ParkingData = Object.assign({}, res.data.msg);
-          this.ParkingData.forEach(item => {
-            item.fields.date = new Date(item.fields.date).toDateString();
-          });
+          this.ParkingData = [...res.data.msg];
+          
         });
       } else {
         return;
@@ -228,13 +250,12 @@ export default {
     },
     getAjax() {
       GET_Repair().then(res => {
-        this.AjaxData = res.data.msg;
+        this.AjaxData = [...res.data.msg];
+        console.log(this.AjaxData)
       });
       GET_Parking().then(res => {
-        this.ParkingData = Object.assign({}, res.data.msg);
-        this.ParkingData.forEach(item => {
-          item.fields.date = new Date(item.fields.date).toDateString();
-        });
+        this.ParkingData = [...res.data.msg];
+        console.log(this.ParkingData)
       });
     }
   },
@@ -242,33 +263,9 @@ export default {
     this.getAjax();
   },
   mounted() {
-    this.activeKey = "Repair";
-  },
-  data() {
-    return {
-      searchVal: "",
-      activeKey: "",
-      AjaxData: [],
-      ParkingData: [],
-      menuList: [
-        {
-          name: "Repair",
-          src: require("@/assets/icons/garage-wrenches-grey.png"),
-          activeSrc: require("@/assets/icons/garage-wrenches.png")
-        },
-        {
-          name: "Amenity",
-          src: require("@/assets/icons/barbecue-grey.png"),
-          activeSrc: require("@/assets/icons/barbecue.png")
-        },
-        {
-          name: "Parking",
-          src: require("@/assets/icons/parked-car-grey.png"),
-          activeSrc: require("@/assets/icons/parked_car.png")
-        }
-      ]
-    };
+    this.activeKey = this.$store.state.ListType;
   }
+
   /*  watch: {
     activeKey: function(val) {
       this.getAjax(val);

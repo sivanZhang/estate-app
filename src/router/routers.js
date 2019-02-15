@@ -64,7 +64,6 @@ const routes = [{
             import ('@/components/RequestList'),
         meta: {
             requireAuth: true,
-            keepAlive: true
         }
     }, {
         path: '/repair/request-repair',
