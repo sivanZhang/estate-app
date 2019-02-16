@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="item">
-          <div class="title">Reply</div>
+          <div class="title">Reply of Admin</div>
           <div>{{replyData}}</div>
         </div>
       </div>
