@@ -1,6 +1,12 @@
 <template>
   <div id="RepairList">
-    <van-nav-bar title="My Request" left-arrow @click-left="$router.go(-1)" right-text="Create" @click-right="newRequest" />
+    <van-nav-bar
+      title="My Request"
+      left-arrow
+      @click-left="$router.go(-1)"
+      right-text="Create"
+      @click-right="toNewRequest"
+    />
     <header class="container">
       <img @click="search" src="@/assets/icons/search.png" alt>
       <input @keydown.enter="search" type="search" v-model="searchVal" placeholder="search">
@@ -13,7 +19,12 @@
     </div>
     <template v-if="activeKey=='Repair'">
       <div v-show="AjaxData==''" class="text-center">No data.</div>
-      <section class="container" v-for="(item,index) in AjaxData" :key="index" @click="$router.push({name:'RequestDetail',params:{rid:item.pk,query:item.fields.status}})">
+      <section
+        class="container"
+        v-for="(item,index) in AjaxData"
+        :key="index"
+        @click="$router.push({name:'RequestDetail',params:{rid:item.pk,query:item.fields.status}})"
+      >
         <div class="date" v-text="item.fields.date"></div>
         <div class="detail">
           <div class="content">
@@ -22,12 +33,14 @@
             <div class="time">{{item.fields.prefertime_start}} to {{item.fields.prefertime_end}}</div>
           </div>
           <div class="operation">
-            <div :class="[{ongoing:item.fields.status==1},{completed:item.fields.status==2},{cancel:item.fields.status==3},{draft:item.fields.status==0},{declined:item.fields.status==5},{accept:item.fields.status==4}]">{{item.fields.status|FStatus}}</div>
+            <div
+              :class="[{ongoing:item.fields.status==1},{completed:item.fields.status==2},{cancel:item.fields.status==3},{draft:item.fields.status==0},{declined:item.fields.status==5},{accept:item.fields.status==4}]"
+            >{{item.fields.status|FStatus}}</div>
             <template v-if="item.fields.status==1">
               <div class="draft">cancel</div>
             </template>
             <template v-else>
-              <van-icon @click.stop="deleteRepair(item.pk)" name="delete" />
+              <van-icon @click.stop="deleteRepair(item.pk)" name="delete"/>
             </template>
           </div>
         </div>
@@ -35,7 +48,12 @@
     </template>
     <template v-else-if="activeKey=='Parking'">
       <div v-show="ParkingData==''" class="text-center">No data.</div>
-      <section class="container" v-for="(item,index) in ParkingData" :key="index" @click="$router.push({name:'ParkingDetail',params:{rid:item.pk,query:item.fields.status}})">
+      <section
+        class="container"
+        v-for="(item,index) in ParkingData"
+        :key="index"
+        @click="$router.push({name:'ParkingDetail',params:{rid:item.pk,query:item.fields.status}})"
+      >
         <div class="date" v-text="item.fields.date"></div>
         <div class="detail">
           <div class="content">
@@ -47,12 +65,14 @@
             </div>
           </div>
           <div class="operation">
-            <div :class="[{ongoing:item.fields.status==0},{accept:item.fields.status==1},{declined:item.fields.status==2},{cancel:item.fields.status==3}]">{{item.fields.status|PStatus}}</div>
+            <div
+              :class="[{ongoing:item.fields.status==0},{accept:item.fields.status==1},{declined:item.fields.status==2},{cancel:item.fields.status==3}]"
+            >{{item.fields.status|PStatus}}</div>
             <template v-if="item.fields.status==0">
               <div class="draft">cancel</div>
             </template>
             <template v-else>
-              <van-icon @click.stop="deleteParking(item.pk)" name="delete" />
+              <van-icon @click.stop="deleteParking(item.pk)" name="delete"/>
             </template>
           </div>
         </div>
@@ -68,7 +88,7 @@
     data() {
       return {
         searchVal: "",
-        activeKey: "Repair",
+        activeKey: '',
         AjaxData: [],
         ParkingData: [],
         menuList: [{
@@ -137,7 +157,7 @@
       }
     },
     methods: {
-      newRequest() {
+      toNewRequest() {
         if (this.activeKey == "Repair") {
           this.$router.push("/repair/request-repair");
         } else if (this.activeKey == "Parking") {
@@ -228,160 +248,154 @@
         }
       },
       getAjax() {
-        Ajax.all([GET_Repair(), GET_Parking()])
-          .then(Ajax.spread((acct, perms) => {
-              this.AjaxData = [...acct.data.msg];
-              this.ParkingData = [...perms.data.msg];
-              console.log('acct', acct, 'perms', perms)
-                // 两个请求现在都执行完成
-              }));
-          }
+        GET_Repair().then(res => {
+              this.AjaxData = [...res.data.msg];
+              });
+        GET_Parking().then(res => {
+              this.ParkingData = [...res.data.msg];
+              });
+      }
       },
       created() {
-        this.getAjax();
+        this.activeKey = this.$store.state.ListType||"Repair";
       },
       mounted() {
-        this.activeKey = this.$store.state.ListType;
+        
+        this.getAjax();
       }
-
-      /*  watch: {
-        activeKey: function(val) {
-          this.getAjax(val);
-        }
-      } */
     };
 </script>
 <style lang="less" scoped>
-  #RepairList {
-    .text-center {
-      text-align: center;
-      padding: 0.3rem 0;
-    }
+#RepairList {
+  .text-center {
+    text-align: center;
+    padding: 0.3rem 0;
+  }
 
-    .ongoing {
-      color: #f5a623;
-    }
+  .ongoing {
+    color: #f5a623;
+  }
 
-    .completed {
-      color: #41b886;
-    }
+  .completed {
+    color: #41b886;
+  }
 
-    .cancel {
-      color: #e60404;
-    }
+  .cancel {
+    color: #e60404;
+  }
 
-    .draft {
-      color: #c8c8cc;
-    }
+  .draft {
+    color: #c8c8cc;
+  }
 
-    .declined {
-      color: #ed8482;
-    }
+  .declined {
+    color: #ed8482;
+  }
 
-    .accept {
-      color: #7db8fd;
-    }
+  .accept {
+    color: #7db8fd;
+  }
 
-    section {
-      .detail {
-        display: flex;
-        justify-content: space-between;
-        padding: 0.15rem;
-        min-height: 1.02rem;
-        border: 1px solid #ececec;
-        box-shadow: 0 0.03rem 0.03rem rgba(200, 200, 204, 0.8);
-        font-size: 0.13rem;
-
-        .operation {
-          flex: 0;
-          display: flex;
-          flex-flow: column nowrap;
-          justify-content: space-between;
-          text-align: right;
-        }
-
-        .content {
-          flex: 1;
-          width: 0;
-          font-size: 0.13rem;
-
-          .title {
-            font-weight: 600;
-            font-size: 0.14rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-
-          p {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-        }
-      }
-
-      .date {
-        margin: 0.18rem 0 0.09rem;
-        height: 0.21rem;
-        line-height: 0.21rem;
-        background-color: #fad87b;
-        border-radius: 0.085rem;
-        display: inline-block;
-        padding: 0 6px;
-        font-size: 0.12rem;
-      }
-    }
-
-    .subnav {
-      height: 0.71rem;
-      line-height: 1;
-
-      display: flex;
-      justify-content: space-around;
-      box-shadow: 0 0.03rem 0.03rem rgba(200, 200, 204, 0.8);
-      align-items: baseline;
-      padding-top: 0.12rem;
-
-      div {
-        text-align: center;
-        font-size: 0.1rem;
-
-        p {
-          text-align: center;
-
-          &.active {
-            color: #fab701;
-          }
-        }
-
-        img {
-          display: inline-block;
-          height: 0.25rem;
-          width: auto;
-          margin-bottom: 0.04rem;
-          object-fit: initial;
-        }
-      }
-    }
-
-    header {
+  section {
+    .detail {
       display: flex;
       justify-content: space-between;
-      margin-top: 0.08rem;
-      align-items: center;
+      padding: 0.15rem;
+      min-height: 1.02rem;
+      border: 1px solid #ececec;
+      box-shadow: 0 0.03rem 0.03rem rgba(200, 200, 204, 0.8);
+      font-size: 0.13rem;
 
-      img {
-        width: 0.2rem;
-        height: 0.2rem;
+      .operation {
+        flex: 0;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+        text-align: right;
       }
 
-      input {
-        flex: 1 1 auto;
-        margin-left: 0.23rem;
-        height: 0.36rem;
-        line-height: 0.36rem;
+      .content {
+        flex: 1;
+        width: 0;
+        font-size: 0.13rem;
+
+        .title {
+          font-weight: 600;
+          font-size: 0.14rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        p {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+
+    .date {
+      margin: 0.18rem 0 0.09rem;
+      height: 0.21rem;
+      line-height: 0.21rem;
+      background-color: #fad87b;
+      border-radius: 0.085rem;
+      display: inline-block;
+      padding: 0 6px;
+      font-size: 0.12rem;
+    }
+  }
+
+  .subnav {
+    height: 0.71rem;
+    line-height: 1;
+
+    display: flex;
+    justify-content: space-around;
+    box-shadow: 0 0.03rem 0.03rem rgba(200, 200, 204, 0.8);
+    align-items: baseline;
+    padding-top: 0.12rem;
+
+    div {
+      text-align: center;
+      font-size: 0.1rem;
+
+      p {
+        text-align: center;
+
+        &.active {
+          color: #fab701;
+        }
+      }
+
+      img {
+        display: inline-block;
+        height: 0.25rem;
+        width: auto;
+        margin-bottom: 0.04rem;
+        object-fit: initial;
       }
     }
   }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.08rem;
+    align-items: center;
+
+    img {
+      width: 0.2rem;
+      height: 0.2rem;
+    }
+
+    input {
+      flex: 1 1 auto;
+      margin-left: 0.23rem;
+      height: 0.36rem;
+      line-height: 0.36rem;
+    }
+  }
+}
 </style>

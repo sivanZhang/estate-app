@@ -24,5 +24,8 @@ export default {
     },
     setListType(state, str) {
         state.ListType = str;
-    }
+    },
+    setUserId(state, num) {
+        state.userId = num;
+    },
 }

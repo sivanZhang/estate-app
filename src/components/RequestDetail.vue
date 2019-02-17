@@ -6,7 +6,7 @@
       <div class="header">
         <div class="title">{{`Repair - ${AjaxData.facilities}`}}</div>
         {{AjaxData.start}} To {{AjaxData.end}}
-        <p>{{`Ticket No.${AjaxData.code}`}}</p> 
+        <p>{{`Ticket No.${AjaxData.code}`}}</p>
       </div>
       <div class="content">
         <div class="item">Address
@@ -27,7 +27,23 @@
           <div>Submitted</div>
           <div class="blod">{{AjaxData.end}}</div>
         </div>
+        <div class="item">
+          <div class="title">Reply of Admin</div>
+          <div class="reply" v-for="(item,index) of replyData" :key="index">
+            <div>
+              <span>{{item.replier_name}}:</span>
+              <div>
+                <span class="date">{{item.date}}</span>
+                <Icon type="ios-trash-outline" @click="DeleteReply(item.pk)"/>
+              </div>
+            </div>
+            <div v-html="item.content"></div>
+          </div>
+          <Input v-model="replyInp" type="textarea" placeholder="Enter Reply content"/>
+          <Button @click="SubmitReply" size="small" shape="circle" style="margin-top:.1rem;">Reply</Button>
+        </div>
       </div>
+
       <template v-if="$route.params.query==1">
         <div @click="CancelItem" class="footer">Cancel</div>
       </template>
@@ -39,7 +55,15 @@
 </template>
 <script>
 import { GET_Repair, POST_Repair } from "@/api/repair";
+import { GET_Reply, POST_Reply } from "@/api/notice";
 export default {
+  data() {
+    return {
+      AjaxData: {},
+      replyData: "",
+      replyInp: ""
+    };
+  },
   filters: {
     FDate(val) {
       let arr = new Date(val).toDateString().split(/\s/g);
@@ -50,6 +74,98 @@ export default {
     }
   },
   methods: {
+       DeleteReply(id) {
+      let data = {
+        method: "delete",
+        id
+      };
+      POST_Reply(data).then(res => {
+        if (res.data.status == "ok") {
+          this.$toast(res.data.msg);
+          this.GetReplyList();
+        } else if (res.data.status == "error") {
+          this.$toast(res.data.msg);
+        }
+      });
+    },
+    GetReplyList() {
+      let reolyParams = {
+        task_type: 0,
+        task_id: this.$route.params.rid
+      };
+      GET_Reply(reolyParams).then(res => {
+        this.replyData = res.data;
+      });
+    },
+    SubmitReply() {
+      let data;
+      if (this.replyData.length >= 1 && this.replyData[1].replier_id) {
+        data = {
+          content: this.replyInp,
+          task_type: 0,
+          receiver_id: this.replyData[1].replier_id,
+          replier_id: this.$store.state.userId,
+          task_id: this.$route.params.rid
+        };
+      } else {
+        data = {
+          content: this.replyInp,
+          task_type: 0,
+          replier_id: this.$store.state.userId,
+          task_id: this.$route.params.rid
+        };
+      }
+
+      POST_Reply(data).then(res => {
+        if (res.data.status == "ok") {
+          this.replyInp = "";
+          this.$toast(res.data.msg);
+          this.GetReplyList();
+        } else if (res.data.status == "error") {
+          this.$toast(res.data.msg);
+        }
+      });
+    },
+    // SubmitReply() {
+    //   // let data = {
+    //   //   content: this.replyInp,
+    //   //   task_type: 0,
+    //   //   replier_id: this.$store.state.userId,
+    //   //   task_id: this.$route.params.rid
+    //   // };
+    //   // if (this.replyData && this.replyData[1].receiver_id) {
+    //   //   data = Object.assign(
+    //   //     { receiver_id: this.replyData[1].receiver_id },
+    //   //     data
+    //   //   );
+    //   // }
+    //   let data;
+    //   if (this.replyData.length >= 1 && this.replyData[1].receiver_id!==null) {
+    //     data = {
+    //       content: this.replyInp,
+    //       task_type: 1,
+    //       receiver_id: this.replyData[1].replier_id,
+    //       replier_id: this.$store.state.userId,
+    //       task_id: this.$route.params.rid
+    //     };
+    //   }else{
+    //     data = {
+    //       content: this.replyInp,
+    //       task_type: 1,
+    //       replier_id: this.$store.state.userId,
+    //       task_id: this.$route.params.rid
+    //     };
+    //   }
+    //   POST_Reply(data).then(res => {
+    //     if (res.data.status == "ok") {
+    //       this.replyInp = "";
+    //       this.$toast(res.data.msg);
+    //       this.GetReplyList();
+    //     } else if (res.data.status == "error") {
+    //       this.$toast(res.data.msg);
+    //     }
+    //   });
+    // },
     CancelItem() {
       this.$dialog
         .confirm({
@@ -73,6 +189,15 @@ export default {
         .catch(() => {
           // on cancel
         });
+    },
+    GetReplyList() {
+      let reolyParams = {
+        task_type: 0,
+        task_id: this.$route.params.rid
+      };
+      GET_Reply(reolyParams).then(res => {
+        this.replyData = res.data;
+      });
     },
     DeleteItem() {
       this.$dialog
@@ -129,11 +254,6 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      AjaxData: {}
-    };
-  },
   created() {
     let params = {
       repair_id: this.$route.params.rid
@@ -141,8 +261,8 @@ export default {
     GET_Repair(params).then(res => {
       this.AjaxData = res.data.msg;
     });
-  }
-  /* beforeRouteEnter (to, from, next) {
+    this.GetReplyList();
+    /* beforeRouteEnter (to, from, next) {
     next(vm=>{
 
     })
@@ -150,6 +270,7 @@ export default {
   beforeRouteLeave (to, from, next) {
     doument.
   } */
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -157,6 +278,35 @@ export default {
   .detail {
     .content {
       .item {
+        div.reply {
+          margin: 0.08rem auto;
+          div:first-child {
+            display: flex;
+            justify-content: space-between;
+            & > span {
+              font-weight: 600;
+            }
+            & > div {
+              span.date {
+                color: #c8c8c8;
+                font-size: 0.12rem;
+              }
+            }
+          }
+
+          & > div:last-child {
+            span {
+              font-size: 0.11rem;
+              color: #c8c8cc;
+            }
+          }
+          &:not(:last-child) {
+            & > div:last-child {
+              border-bottom: 1px solid #ddd;
+              padding-bottom: 0.08rem;
+            }
+          }
+        }
         padding: 0.15rem;
         & + .item {
           border-top: 1px solid #c8c8cc;

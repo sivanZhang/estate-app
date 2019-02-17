@@ -5,4 +5,5 @@ export default {
     Property: [],
     Total: '',
     ListType: '',
+    userId: '',
 }

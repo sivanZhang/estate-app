@@ -59,8 +59,9 @@
             if (res.data.status == "ok") {
               this.$toast(res.data.msg);
               this.$store.commit("setToken", `JWT ${res.data.token}`);
-              this.$store.commit("setUserName", res.data.username);
-              this.$store.commit("setPortrait", res.data.portrait);
+              this.$store.commit("setUserId", res.data.id);
+              /* this.$store.commit("setUserName", res.data.username);
+              this.$store.commit("setPortrait", res.data.portrait); */
               let redirect = decodeURIComponent(
                 this.$route.query.redirect || "/"
               );
