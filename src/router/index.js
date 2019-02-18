@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
-import { routes } from "./routers";
+import routesall from "./routers";
+import notice from "./notice";
 import { Toast } from "vant";
 Vue.use(Router);
-const ROUTER = new Router({
+const routes = [...routesall, ...notice],
+ROUTER = new Router({
     routes,
 });
 //进入页面时候的登陆拦截

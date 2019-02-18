@@ -44,7 +44,7 @@ const routes = [{
         path: '/requestDetail/:rid',
         name: 'RequestDetail',
         component: () =>
-            import ('@/components/RequestDetail'),
+            import('@/views/repair/RepairDetail'),
         meta: {
             requireAuth: true,
         }
@@ -61,7 +61,7 @@ const routes = [{
         path: '/requestList',
         name: 'RequestList',
         component: () =>
-            import ('@/components/RequestList'),
+            import('@/views/userCenter/RequestList'),
         meta: {
             requireAuth: true,
         }
@@ -70,15 +70,6 @@ const routes = [{
         name: 'RequestRepair',
         component: () =>
             import ('@/views/repair/RequestRepair'),
-        meta: {
-            requireAuth: true,
-        }
-    },
-    {
-        path: '/notifications',
-        name: 'Notifications',
-        component: () =>
-            import ('@/views/notifications/Notifications'),
         meta: {
             requireAuth: true,
         }
@@ -121,6 +112,4 @@ const routes = [{
             import ('@/views/bill/ConfirmPayment'),
     },
 ];
-export {
-    routes
-}
+export default routes
