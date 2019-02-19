@@ -14,3 +14,7 @@ export const POST_Reply = async (payload) => {
 export const GET_Reply = async (params) => {
   return await Ajax.get('/reply/replies/?json', { params })
 }
+//获取news或者根据id获取detaile
+export const GET_News = async (params=null) => {
+  return await Ajax.get('/annoucement/annoucement/?json', { params })
+}

@@ -13,5 +13,21 @@ const routes = [{
   meta: {
     requireAuth: true,
   }
-}, ];
+}, {
+  path: '/news',
+  name: 'News',
+  component: () =>
+    import('@/views/notifications/News'),
+  meta: {
+    requireAuth: true,
+  }
+}, {
+  path: '/view-news',
+  name: 'ViewNews',
+  component: () =>
+    import('@/views/notifications/ViewNews'),
+  meta: {
+    requireAuth: true,
+  }
+}];
 export default routes
