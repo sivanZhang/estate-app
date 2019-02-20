@@ -9,16 +9,22 @@
       :key="index"
       @click="$router.push({name:'ViewNews',params:{nid:item.pk}})"
     >
-      <header>{{item.fields.title}}<span v-if="item.fields.urgency_level==1">!</span></header>
+      <header>
+        {{item.fields.title}}
+        <span v-if="item.fields.urgency_level==1">!</span>
+      </header>
       <p class="date">jun 19 2019</p>
-      <div v-html="item.fields.content">
-      </div>
+      <div ref="content" v-html="item.fields.content"></div>
     </section>
   </div>
 </template>
 <script>
 import { GET_News } from "@/api/notice";
 export default {
+  mounted(){
+    /* this.$refs.content.p.img.style.width = '100%'; */
+    console.log(this.$refs[0].childNodes[0].childNodes[0])
+  },
   data() {
     return {
       newsListData: []
@@ -41,9 +47,9 @@ export default {
       font-size: 0.15rem;
       font-weight: 600;
       position: relative;
-      span{
+      span {
         position: absolute;
-        right: -.11rem;
+        right: -0.11rem;
         color: #e96f6c;
       }
     }
