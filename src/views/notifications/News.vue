@@ -22,8 +22,6 @@
 import { GET_News } from "@/api/notice";
 export default {
   mounted(){
-    /* this.$refs.content.p.img.style.width = '100%'; */
-    console.log(this.$refs[0].childNodes[0].childNodes[0])
   },
   data() {
     return {
