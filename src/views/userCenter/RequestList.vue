@@ -132,10 +132,10 @@
             return "Canceled";
             break;
           case 4:
-            return "Accept";
+            return "Accepted";
             break;
           case 5:
-            return "Decline";
+            return "Declined";
             break;
         }
       },
@@ -145,10 +145,10 @@
             return "Ongoing";
             break;
           case 1:
-            return "Accept";
+            return "Accepted";
             break;
           case 2:
-            return "Decline";
+            return "Declined";
             break;
           case 3:
             return "Canceled";

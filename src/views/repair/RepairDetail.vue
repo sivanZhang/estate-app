@@ -28,7 +28,7 @@
           <div class="blod">{{AjaxData.end}}</div>
         </div>
         <div class="item">
-          <div class="title">Reply of Admin</div>
+          <div class="title">Replies:</div>
           <div class="reply" v-for="(item,index) of replyData" :key="index">
             <div>
               <span>{{item.replier_name}}:</span>
@@ -252,10 +252,10 @@
             return "Canceled";
             break;
           case 4:
-            return "Accept";
+            return "Accepted";
             break;
           case 5:
-            return "Decline";
+            return "Declined";
             break;
         }
       }
