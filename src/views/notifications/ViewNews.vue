@@ -1,7 +1,6 @@
 <template>
   <div id="ViewNews">
     <van-nav-bar title="ViewNews" left-arrow @click-left="$router.go(-1)">
-      <van-icon name="description" slot="right"/>
     </van-nav-bar>
     <div class="container">
       <header>{{newsDetailData.title}}</header>
