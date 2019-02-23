@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="item">
-          <div class="title">Reply of Admin</div>
+          <div class="title">Replies:</div>
           <div class="reply" v-for="(item,index) of replyData" :key="index">
             <div>
               <span>{{item.replier_name}}:</span>
@@ -190,10 +190,10 @@ export default {
           return "Ongoing";
           break;
         case 1:
-          return "Accept";
+          return "Accepted";
           break;
         case 2:
-          return "Decline";
+          return "Declined";
           break;
         case 3:
           return "Canceled";
