@@ -61,9 +61,11 @@
     <h3>Contact me before coming
       <van-switch v-model="checked" active-color="#41b886" size=".17rem"/>
     </h3>
-    <h3>Contact Details</h3>
+    <template v-if="checked">
+      <h3>Contact Details</h3>
     <input v-model="phone" class="Contact" type="text" placeholder="Phone number">
     <input v-model="email" class="Contact" type="text" placeholder="Email">
+    </template>
     <h3 class="note">
       Note
       <span>(optional)</span>
