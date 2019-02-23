@@ -13,7 +13,7 @@
       <h3>Select Property</h3>
       <van-radio-group v-model="radio">
         <div class="select">
-          <div v-for="(item,index) in PropertyData" :key="index">
+          <div v-for="(item,index) in PropertyData" :key="index" @click="radio = item.id">
             <img src="@/assets/icons/house.png" alt>
             <div>
               <p>{{item.building_name}}</p>
