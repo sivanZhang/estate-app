@@ -29,7 +29,7 @@
       <div class="content">
         <div class="name">{{item.fields.title}}</div>
         <div class="date">{{item.fields.date.split(' ')[0]}}</div>
-        <div class="msg">{{item.fields.content}}</div>
+        <div class="msg" v-html="item.fields.content"></div>
       </div>
     </section>
   </div>
@@ -66,7 +66,7 @@ export default {
       flex-flow: row wrap;
       justify-content: space-between;
       padding-left: .28rem;
-      .msg {
+      div {
         width: 100%;
       }
       .date{

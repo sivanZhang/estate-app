@@ -10,3 +10,8 @@
     </router-view>
   </div>
 </template>
+<style lang="less">
+#app{
+  padding-bottom: .5rem;
+}
+</style>

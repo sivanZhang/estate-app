@@ -109,7 +109,7 @@ export default {
   },
   methods: {
     toList() {
-      this.$store.commit('setListType','activeKey')
+      this.$store.commit("setListType", "Repair");
       this.$router.push({
         name: "RequestList"
       });
@@ -167,7 +167,7 @@ export default {
       POST_Repair(data).then(res => {
         this.$toast(res.data.msg);
         if (res.data.status == "ok") {
-          this.$store.commit('setListType','activeKey')
+          this.$store.commit("setListType", "Repair");
           this.$router.push({
             name: "RequestList"
           });
@@ -179,6 +179,9 @@ export default {
 </script>
 <style lang="less" scoped>
 #reques {
+  & /deep/ .van-radio__icon .van-icon {
+    background-color: #fff;
+  }
   button.conmmt-btn {
     display: block;
     width: 2.33rem;

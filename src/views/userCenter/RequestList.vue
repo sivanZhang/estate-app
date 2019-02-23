@@ -260,7 +260,6 @@
         this.activeKey = this.$store.state.ListType||"Repair";
       },
       mounted() {
-        
         this.getAjax();
       }
     };
