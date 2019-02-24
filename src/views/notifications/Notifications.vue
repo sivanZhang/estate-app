@@ -86,15 +86,11 @@ export default {
 #notifications {
   section {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     border-bottom: 1px solid #c8c8cc;
     padding: 0.15rem;
     .content {
-      flex: 1;
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: space-between;
-      padding-left: 0.28rem;
+      padding-left: 0.15rem;
       div {
         width: 100%;
       }
@@ -103,7 +99,14 @@ export default {
       }
       .name {
         font-weight: 600;
+          font-size: 0.14rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
       }
+
+        .msg {
+        }
     }
 
     img {
