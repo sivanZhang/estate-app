@@ -18,7 +18,7 @@ let Ajax = axios.create({
 Ajax.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 Ajax.interceptors.request.use(
     config => {
-        let token = store.state.estateToken || localStorage.estateToken;
+        let token = store.state.estateToken || sessionStorage.estateToken;
         token && (config.headers.Authorization = token);
         return config;
     },

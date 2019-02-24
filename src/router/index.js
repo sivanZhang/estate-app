@@ -5,43 +5,43 @@ import routesall from "./routers";
 import notice from "./notice";
 import { Toast } from "vant";
 Vue.use(Router);
-const routes = [...notice,...routesall],
-ROUTER = new Router({
-    routes,
-    scrollBehavior(to, from, savedPosition) {
-      if (savedPosition) {
-        return savedPosition
-      } else {
-        if (from.meta.keepAlive) {
-          from.meta.savedPosition = document.body.scrollTop;
+const routes = [...notice, ...routesall],
+    ROUTER = new Router({
+        routes,
+        scrollBehavior(to, from, savedPosition) {
+            if (savedPosition) {
+                return savedPosition
+            } else {
+                if (from.meta.keepAlive) {
+                    from.meta.savedPosition = document.body.scrollTop;
+                }
+                return { x: 0, y: to.meta.savedPosition || 0 }
+            }
         }
-        return { x: 0, y: to.meta.savedPosition || 0 }
-      }
-    }
-});
+    });
 //进入页面时候的登陆拦截
 ROUTER.beforeEach((to, from, next) => {
-    window.document.title = to.name || 'Estate';
-    if (to.matched.some(r => r.meta.requireAuth)) {
-        let token = store.state.estateToken || localStorage.getItem('estateToken');
-        if (token) {
-            next();
+        window.document.title = to.name || 'Estate';
+        if (to.matched.some(r => r.meta.requireAuth)) {
+            let token = store.state.estateToken || sessionStorage.getItem('estateToken');
+            if (token) {
+                next();
+            } else {
+                Toast({
+                    message: "Not logged in",
+                });
+                next({
+                    path: '/login',
+                    query: { redirect: to.fullPath }
+                })
+            }
         } else {
-            Toast({
-                message: "Not logged in",
-            });
-            next({
-                path: '/login',
-                query: { redirect: to.fullPath }
-            })
+            next();
         }
-    } else {
-        next();
-    }
-})
-/* ROUTER.afterEach((to, from, next) => {
-    window.scrollTo(0, 0);
-}) */
+    })
+    /* ROUTER.afterEach((to, from, next) => {
+        window.scrollTo(0, 0);
+    }) */
 
 
 export default ROUTER;

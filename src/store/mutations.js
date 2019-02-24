@@ -2,9 +2,9 @@ export default {
     setToken(state, str) {
         state.estateToken = str;
         if (str) {
-            localStorage.setItem('estateToken', str);
+            sessionStorage.setItem('estateToken', str);
         } else {
-            localStorage.removeItem('estateToken');
+            sessionStorage.removeItem('estateToken');
         }
     },
     setUserName(state, str) {
