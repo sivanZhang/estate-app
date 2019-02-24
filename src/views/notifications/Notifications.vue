@@ -24,7 +24,12 @@
         <p>Events</p>
       </div>
     </div>
-    <section class="container" v-for="item in notiData" :key="item.pk">
+    <section
+      class="container"
+      v-for="item in notiData"
+      :key="item.pk"
+      @click="target_detail(item.fields)"
+    >
       <img src="@/assets/image/touxiang.png" alt>
       <div class="content">
         <div class="name">{{item.fields.title}}</div>
@@ -40,15 +45,26 @@ import { GET_Notice } from "@/api/notice";
 export default {
   data() {
     return {
-      notiData:[],
+      notiData: []
     };
   },
   created() {
     GET_Notice()
       .then(res => {
-        this.notiData=res.data.msg;
+        this.notiData = res.data.msg;
       })
       .catch(err => {});
+  },
+  methods: {
+    target_detail(data) {
+      if (data.category == 0) {
+        this.$router.push({name:'RequestDetail',params:{rid:data.task_id}})
+      } else if (data.category == 1) {
+        this.$router.push({name:'ParkingDetail',params:{rid:data.task_id}})
+      } else if (data.category == 2) {
+        this.$router.push({name:'ViewNews',params:{nid:data.task_id}})
+      }
+    }
   }
 };
 </script>
@@ -59,19 +75,20 @@ export default {
     display: flex;
     flex-flow: row wrap;
     border-bottom: 1px solid #c8c8cc;
-    padding: .15rem;
+    padding: 0.15rem;
     .content {
       flex: 1;
       display: flex;
       flex-flow: row wrap;
       justify-content: space-between;
-      padding-left: .28rem;
+      padding-left: 0.28rem;
       div {
         width: 100%;
       }
-      .date{
-        color:#c8c8cc;
-      }.name{
+      .date {
+        color: #c8c8cc;
+      }
+      .name {
         font-weight: 600;
       }
     }

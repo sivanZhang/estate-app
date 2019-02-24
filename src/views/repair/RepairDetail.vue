@@ -1,6 +1,6 @@
 <template>
   <div id="Detail">
-    <van-nav-bar title="Detail" left-arrow @click-left="$router.go(-1)" fixed :border="false" />
+    <van-nav-bar title="Details" left-arrow @click-left="$router.go(-1)" fixed :border="false" />
     <h3 class="container">{{title}}</h3>
     <div class="detail">
       <div class="header">
@@ -44,7 +44,7 @@
         </div>
       </div>
 
-      <template v-if="$route.params.query==1">
+      <template v-if="AjaxData.status==1">
         <div @click="CancelItem" class="footer">Cancel</div>
       </template>
       <template v-else>
@@ -238,7 +238,7 @@
         }
       },
       title() {
-        switch (this.$route.params.query) {
+        switch (this.AjaxData.status) {
           case 0:
             return "Draft";
             break;
