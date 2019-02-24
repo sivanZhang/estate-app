@@ -24,12 +24,7 @@
         <p>Events</p>
       </div>
     </div>
-    <section
-      class="container"
-      v-for="item in notiData"
-      :key="item.pk"
-      @click="target_detail(item.fields)"
-    >
+    <section class="container" v-for="item in notiData" :key="item.pk" @click="target_detail(item)">
       <img src="@/assets/image/touxiang.png" alt>
       <div class="content">
         <div class="name">{{item.fields.title}}</div>
@@ -41,7 +36,7 @@
 </template>
 
 <script>
-import { GET_Notice } from "@/api/notice";
+import { GET_Notice, POST_Notice } from "@/api/notice";
 export default {
   data() {
     return {
@@ -57,13 +52,31 @@ export default {
   },
   methods: {
     target_detail(data) {
-      if (data.category == 0) {
-        this.$router.push({name:'RequestDetail',params:{rid:data.task_id}})
+      this.isRead(data.pk);
+      if (data.fields.category == 0) {
+        this.$router.push({
+          name: "RequestDetail",
+          params: { rid: data.fields.task_id }
+        });
       } else if (data.category == 1) {
-        this.$router.push({name:'ParkingDetail',params:{rid:data.task_id}})
+        this.$router.push({
+          name: "ParkingDetail",
+          params: { rid: data.fields.task_id }
+        });
       } else if (data.category == 2) {
-        this.$router.push({name:'ViewNews',params:{nid:data.task_id}})
+        this.$router.push({
+          name: "ViewNews",
+          params: { nid: data.fields.task_id }
+        });
       }
+    },
+    isRead(id) {
+      let data = {
+        id,
+        read:1,
+        method: "put",
+      };
+      POST_Notice(data);
     }
   }
 };

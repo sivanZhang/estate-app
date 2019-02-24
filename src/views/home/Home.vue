@@ -106,7 +106,8 @@ export default {
   created() {
     GET_Notice()
       .then(res => {
-        this.noticeData = res.data.msg;
+        this.noticeData = [...res.data.msg];
+        this.noticeData = this.noticeData.filter(item=>item.fields.read==0)
       })
       .catch(err => {});
     GET_News().then(res => {
