@@ -58,12 +58,12 @@ export default {
           name: "RequestDetail",
           params: { rid: data.fields.task_id }
         });
-      } else if (data.category == 1) {
+      } else if (data.fields.category == 1) {
         this.$router.push({
           name: "ParkingDetail",
           params: { rid: data.fields.task_id }
         });
-      } else if (data.category == 2) {
+      } else if (data.fields.category == 2) {
         this.$router.push({
           name: "ViewNews",
           params: { nid: data.fields.task_id }
@@ -104,9 +104,6 @@ export default {
           overflow: hidden;
           text-overflow: ellipsis;
       }
-
-        .msg {
-        }
     }
 
     img {
