@@ -21,7 +21,7 @@
         <button @click="next" class="conmmt-btn">Next</button>
       </template>
       <template v-if="active==1">
-        <input v-model="code" type="text" class="common-inp" placeholder="Code">
+        <input v-model="code" type="number" class="common-inp" placeholder="Code">
         <button @click="verify" class="conmmt-btn">Verify</button>
       </template>
       <template v-if="active==2">
