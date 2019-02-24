@@ -12,9 +12,7 @@
       <div class="bottom-line"></div>
     </div>
     <div class="links">
-      <a href="#">Get a password</a>
-      <span>|</span>
-      <router-link to="/login/forgot">Forgotten</router-link>
+      <router-link to="/login/forgot">Reset My Password</router-link>
     </div>
     <!-- <button @click="submit()" class="sunbmit common-btn" :disabled="isDisabled">Log In</button> -->
     <Button class="sunbmit common-btn" @click.passive="submit" :disabled="isDisabled" ghost>Log In</Button>
