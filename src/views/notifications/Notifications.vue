@@ -25,11 +25,15 @@
       </div>
     </div>
     <section class="container" v-for="item in notiData" :key="item.pk" @click="target_detail(item)">
+      <Badge dot v-if="item.fields.read==0"></Badge>
       <img src="@/assets/image/touxiang.png" alt>
       <div class="content">
-        <div class="name">{{item.fields.title}}</div>
-        <div class="date">{{item.fields.date.split(' ')[0]}}</div>
-        <div class="msg" v-html="item.fields.content"></div>
+        <div>
+          <div class="name">{{item.fields.title}}</div>
+          <div class="date">{{item.fields.date.split(' ')[0]}}</div>
+          <div class="msg" v-html="item.fields.content"></div>
+          <Icon @click.stop="deleteNotice(item.pk)" type="ios-trash-outline"/>
+        </div>
       </div>
     </section>
   </div>
@@ -70,11 +74,25 @@ export default {
         });
       }
     },
+    deleteNotice(ids) {
+      let data = {
+        ids,
+        method: "delete"
+      };
+      POST_Notice(data).then(res => {
+        this.$toast(res.data.msg);
+        GET_Notice()
+      .then(res => {
+        this.notiData = res.data.msg;
+      })
+      .catch(err => {});
+      });
+    },
     isRead(id) {
       let data = {
         id,
-        read:1,
-        method: "put",
+        read: 1,
+        method: "put"
       };
       POST_Notice(data);
     }
@@ -85,24 +103,29 @@ export default {
 <style lang="less" scoped>
 #notifications {
   section {
+    width: 100%;
+    position: relative;
     display: flex;
     flex-flow: row nowrap;
+    justify-content: flex-start;
     border-bottom: 1px solid #c8c8cc;
     padding: 0.15rem;
+
     .content {
       padding-left: 0.15rem;
-      div {
-        width: 100%;
-      }
-      .date {
-        color: #c8c8cc;
-      }
-      .name {
-        font-weight: 600;
+      & > div {
+        .date {
+          display: flex;
+          justify-content: space-between;
+          color: #c8c8cc;
+        }
+        .name {
+          font-weight: 600;
           font-size: 0.14rem;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+        }
       }
     }
 
