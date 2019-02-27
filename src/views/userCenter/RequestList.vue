@@ -1,5 +1,5 @@
 <template>
-  <div id="RepairList">
+  <div id="RepairList" class="warp-pb">
     <van-nav-bar title="My Request" left-arrow @click-left="$router.go(-1)" right-text="Create" @click-right="targetNewRequest" />
 
     <header class="container">

@@ -9,9 +9,3 @@
     <router-view v-if="!$route.meta.keepAlive"></router-view>
   </div>
 </template>
-
-<style lang="less">
-#app {
-  padding-bottom: 0.5rem;
-}
-</style>

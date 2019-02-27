@@ -1,5 +1,5 @@
 <template>
-  <div id="propertyList">
+  <div id="propertyList"  class="warp-pb">
     <van-nav-bar title="My Property" left-arrow @click-left="$router.go(-1)"/>
     <section v-for="(item,index) in propertyList" :key="index">
       {{item.room_number}}

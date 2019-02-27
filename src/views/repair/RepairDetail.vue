@@ -281,6 +281,7 @@
 </script>
 <style lang="less" scoped>
   #Detail {
+    padding-bottom: .3rem;
     .detail {
       .content {
         .item {
