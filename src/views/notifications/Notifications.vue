@@ -1,10 +1,6 @@
 <template>
   <div id="notifications">
     <van-nav-bar title="Notifications" left-arrow @click-left="$router.go(-1)"/>
-    <header class="container">
-      <img src="@/assets/icons/search.png" alt>
-      <input type="text" placeholder="search">
-    </header>
     <div class="subnav">
       <div>
         <img src="@/assets/icons/parked-car.png" style="width:.309rem" alt>
