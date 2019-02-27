@@ -14,15 +14,14 @@
         <span v-if="item.fields.urgency_level==1">!</span>
       </header>
       <p class="date">jun 19 2019</p>
-      <div ref="content" v-html="item.fields.content"></div>
+      <div class="content" v-html="item.fields.content"></div>
     </section>
   </div>
 </template>
 <script>
 import { GET_News } from "@/api/notice";
 export default {
-  mounted(){
-  },
+  mounted() {},
   data() {
     return {
       newsListData: []
@@ -54,6 +53,10 @@ export default {
     .date {
       color: #c8c8cc;
       font-size: 0.12rem;
+    }
+    .content {
+      width: 0.77rem;
+      height: .64rem;
     }
   }
 }
