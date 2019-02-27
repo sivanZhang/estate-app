@@ -1,5 +1,15 @@
 <template>
   <div id="news">
+    <Button
+      shape="circle"
+      icon="ios-home"
+      to="/home"
+      style="position:fixed;
+        right: .15rem;
+        bottom: .3rem;
+        z-index:1000;color:#fab701;font-size:.18rem;border-color:#fab701"
+        size="large"
+    ></Button>
     <van-nav-bar title="News" left-arrow @click-left="$router.go(-1)">
       <van-icon name="description" slot="right"/>
     </van-nav-bar>
@@ -13,7 +23,7 @@
         {{item.fields.title}}
         <span v-if="item.fields.urgency_level==1">!</span>
       </header>
-      <p class="date">jun 19 2019</p>
+      <p class="date">{{item.fields.date}}</p>
       <div class="content" v-html="item.fields.content"></div>
     </section>
   </div>
@@ -55,8 +65,10 @@ export default {
       font-size: 0.12rem;
     }
     .content {
-      width: 0.77rem;
-      height: .64rem;
+      width: 100%;
+      max-height: .64rem;
+      overflow: hidden;
+      font-size: .13rem;
     }
   }
 }

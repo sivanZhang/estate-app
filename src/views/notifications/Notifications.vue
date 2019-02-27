@@ -1,5 +1,15 @@
 <template>
   <div id="notifications">
+    <Button
+      shape="circle"
+      icon="ios-home"
+      to="/home"
+      style="position:fixed;
+        right: .15rem;
+        bottom: .3rem;
+        z-index:1000;color:#fab701;font-size:.18rem;border-color:#fab701"
+        size="large"
+    ></Button>
     <van-nav-bar title="Notifications" left-arrow @click-left="$router.go(-1)"/>
     <div class="subnav">
       <div>
