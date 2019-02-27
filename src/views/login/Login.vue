@@ -15,7 +15,7 @@
       <router-link to="/login/forgot">Reset My Password</router-link>
     </div>
     <!-- <button @click="submit()" class="sunbmit common-btn" :disabled="isDisabled">Log In</button> -->
-    <Button class="sunbmit common-btn" @click.passive="submit" :disabled="isDisabled" ghost>Log In</Button>
+    <Button :loading="isloding" class="sunbmit common-btn" @click.passive="submit" :disabled="isDisabled" ghost>Log In</Button>
   </div>
 </template>
 
@@ -25,7 +25,8 @@
     data() {
       return {
         PhoneNumber: "",
-        Password: ""
+        Password: "",
+        isloding:false,
       };
     },
     computed: {
@@ -50,11 +51,12 @@
           // phone: '13032985685',
           // password: '123456',
         };
-        this.loading = true;
+        this.isloding = true;
         POST_LOGIN(data)
           .then(res => {
             this.loading = false;
             if (res.data.status == "ok") {
+              this.isloding = false;
               this.$toast(res.data.msg);
               this.$store.commit("setToken", `JWT ${res.data.token}`);
               this.$store.commit("setUserId", res.data.id);
@@ -68,9 +70,10 @@
               });
             } else if (res.data.status == "error") {
               this.$toast(res.data.msg);
+              this.isloding = false;
             }
           })
-          .catch(error => {});
+          .catch(error => {this.isloding = false;});
       }
     },
   };
