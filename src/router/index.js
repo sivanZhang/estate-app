@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
-import routesall from "./routers";
+import otherRoutes from "./routers";
 import notice from "./notice";
+import login from "./login";
 import { Toast } from "vant";
 Vue.use(Router);
-const routes = [...notice, ...routesall],
+const routes = [...login,...notice, ...otherRoutes],
     ROUTER = new Router({
         routes,
         scrollBehavior(to, from, savedPosition) {
