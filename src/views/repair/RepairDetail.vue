@@ -1,15 +1,9 @@
 <template>
   <div id="Detail">
-    <Button
-      shape="circle"
-      icon="ios-home"
-      to="/home"
-      style="position:fixed;
+    <Button shape="circle" icon="ios-home" to="/home" style="position:fixed;
         right: .15rem;
         bottom: .3rem;
-        z-index:1000;color:#fab701;font-size:.18rem;border-color:#fab701"
-        size="large"
-    ></Button>
+        z-index:1000;color:#fab701;font-size:.18rem;border-color:#fab701" size="large"></Button>
     <van-nav-bar title="Details" left-arrow @click-left="$router.go(-1)" fixed :border="false" />
     <h3 class="container">{{title}}</h3>
     <div class="detail">
@@ -109,11 +103,11 @@
       },
       SubmitReply() {
         let data;
-        if (this.replyData.length >= 1 && this.replyData[1].replier_id) {
+        if (this.replyData.length >= 1 && this.replyData[0].replier_id) {
           data = {
             content: this.replyInp,
             task_type: 0,
-            receiver_id: this.replyData[1].replier_id,
+            receiver_id: this.replyData[0].replier_id,
             replier_id: this.$store.state.userId,
             task_id: this.$route.params.rid
           };
@@ -292,6 +286,7 @@
 <style lang="less" scoped>
   #Detail {
     padding-bottom: .3rem;
+
     .detail {
       .content {
         .item {

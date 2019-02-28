@@ -1,6 +1,8 @@
 <template>
   <div id="login">
-    <div class="logo"></div>
+    <div class="logo">
+      <img src="@/assets/image/touxiang.png" alt="">
+    </div>
     <div class="input-container">
       <input type="input" id="input" v-model="PhoneNumber" placeholder="Phone Number">
       <label for="input">Phone Number</label>
@@ -14,7 +16,6 @@
     <div class="links">
       <router-link to="/login/forgot">Reset My Password</router-link>
     </div>
-    <!-- <button @click="submit()" class="sunbmit common-btn" :disabled="isDisabled">Log In</button> -->
     <Button :loading="isloding" class="sunbmit common-btn" @click.passive="submit" :disabled="isDisabled" ghost>Log In</Button>
   </div>
 </template>
@@ -26,7 +27,7 @@
       return {
         PhoneNumber: "",
         Password: "",
-        isloding:false,
+        isloding: false,
       };
     },
     computed: {
@@ -73,7 +74,7 @@
               this.isloding = false;
             }
           })
-          .catch(error => {this.isloding = false;});
+          .catch(error => { this.isloding = false; });
       }
     },
   };
@@ -168,10 +169,15 @@
 
     .logo {
       margin: 1.58rem auto 1rem;
-      height: 1.3rem;
-      width: 1.3rem;
-      border-radius: 50%;
-      background-color: #d8d8d8;
+      text-align: center;
+
+      img {
+        height: 1.3rem;
+        width: 1.3rem;
+        border-radius: 50%;
+        background-color: #d8d8d8;
+        border: 1px solid #c8c8c8;
+      }
     }
 
     .sunbmit {

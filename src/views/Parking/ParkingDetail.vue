@@ -25,11 +25,6 @@
         <div class="item">Vehicle Registration No.
           <div class="blod"></div>
         </div>
-        <div class="item">
-          <div class="title">Contact me before coming</div>
-          <div class="blod">Phone 435666777</div>
-          <div class="blod">Email 123@gmail.com</div>
-        </div>
         <div class="item">Note
           <div class="blod">{{AjaxData.note}}</div>
         </div>
