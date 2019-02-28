@@ -22,10 +22,7 @@
         <div class="item">reservation
           <div class="blod">{{`${AjaxData.number} Parking spots`}}</div>
         </div>
-        <div class="item">Vehicle Registration No.
-          <div class="blod"></div>
-        </div>
-        <div class="item">Note
+        <div class="item">Vehicle Registration No. & Note
           <div class="blod">{{AjaxData.note}}</div>
         </div>
         <div class="item">
