@@ -39,13 +39,7 @@
     </div>
     <div class="subnav">
       <div>
-        <img
-          src="@/assets/icons/parked-car.png"
-          v-touch:long="alt"
-          style="width:.309rem"
-          alt
-          @click="$router.push('/Parking/ReserveParkingSpot')"
-        >
+        <img src="@/assets/icons/parked-car.png" v-touch:long="alt" style="width:.309rem" alt @click="$router.push('/Parking/ReserveParkingSpot')">
         <p>Reseve</p>
         <p>Parking Spot</p>
       </div>
@@ -67,11 +61,12 @@
         <div class="left" @click="$router.push('/news')">
           <img src="@/assets/icons/laba.svg" alt>
           <p>News</p>
-          <van-icon name="arrow-down"/>
+          <van-icon name="arrow-down" />
         </div>
-        <div class="right" @click="$router.push({name:'ViewNews',params:{nid:newsListData[0].pk}})">{{newsListData[0].fields.title}}
-          <van-icon name="arrow"/>
+        <div v-if="newsListData.length" class="right" @click="$router.push({name:'ViewNews',params:{nid:newsListData[0].pk}})">{{newsListData[0].fields.title}}
+          <van-icon name="arrow" />
         </div>
+        <div v-else class="right">No news</div>
       </div>
       <div class="home-pic">
         <img src="@/assets/image/home.png" alt>
@@ -84,194 +79,194 @@
 </template>
 
 <script>
-import { GET_Notice, GET_News } from "@/api/notice";
+  import { GET_Notice, GET_News } from "@/api/notice";
 
-export default {
-  name: "home",
-  data() {
-    return {
-      noticeData: [],
-      newsListData:[]
-    };
-  },
-  components: {},
-  methods: {
-    alt() {
-      alert("changan");
+  export default {
+    name: "home",
+    data() {
+      return {
+        noticeData: [],
+        newsListData: []
+      };
     },
-    target() {
-      this.$router.push("/notifications");
+    components: {},
+    methods: {
+      alt() {
+        alert("changan");
+      },
+      target() {
+        this.$router.push("/notifications");
+      }
+    },
+    created() {
+      GET_Notice()
+        .then(res => {
+          this.noticeData = [...res.data.msg];
+          this.noticeData = this.noticeData.filter(item => item.fields.read == 0)
+        })
+        .catch(err => {});
+      GET_News().then(res => {
+        this.newsListData = [...res.data.msg];
+      });
     }
-  },
-  created() {
-    GET_Notice()
-      .then(res => {
-        this.noticeData = [...res.data.msg];
-        this.noticeData = this.noticeData.filter(item=>item.fields.read==0)
-      })
-      .catch(err => {});
-    GET_News().then(res => {
-      this.newsListData = [...res.data.msg];
-    });
-  }
-};
+  };
 </script>
 
 <style lang="less" scoped>
-#home {
-  .main {
-    padding: 0.2rem 0.15rem 0;
+  #home {
+    .main {
+      padding: 0.2rem 0.15rem 0;
 
-    .user {
-      text-align: center;
-      margin-top: 0.15rem;
-
-      img {
-        width: 0.72rem;
-        height: 0.72rem;
+      .user {
         text-align: center;
+        margin-top: 0.15rem;
+
+        img {
+          width: 0.72rem;
+          height: 0.72rem;
+          text-align: center;
+        }
       }
-    }
 
-    .home-pic {
-      text-align: center;
-      margin-top: 0.15rem;
+      .home-pic {
+        text-align: center;
+        margin-top: 0.15rem;
 
-      img {
-        height: 1.3rem;
-        width: 3.3rem;
-        border-radius: 0.05rem;
+        img {
+          height: 1.3rem;
+          width: 3.3rem;
+          border-radius: 0.05rem;
+        }
       }
-    }
 
-    .mask {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 0.59rem;
-      padding: 0.15rem;
-      box-shadow: 0 0 0.06rem 0.01rem rgba(200, 200, 204, 0.8);
-
-      .right {
-        height: 0.33rem;
-        line-height: 0.33rem;
-        flex: 1 1 auto;
+      .mask {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-left: 1px solid #c8c8cc;
-        padding-left: 0.15rem;
-        margin-left: 0.15rem;
-      }
+        height: 0.59rem;
+        padding: 0.15rem;
+        box-shadow: 0 0 0.06rem 0.01rem rgba(200, 200, 204, 0.8);
 
-      .left {
-        text-align: center;
-
-        p {
-          color: #e96f6c;
-          font-size: 0.08rem;
+        .right {
+          height: 0.33rem;
+          line-height: 0.33rem;
+          flex: 1 1 auto;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border-left: 1px solid #c8c8cc;
+          padding-left: 0.15rem;
+          margin-left: 0.15rem;
         }
 
-        img {
-          height: 0.15rem;
-          width: 0.151rem;
+        .left {
+          text-align: center;
+
+          p {
+            color: #e96f6c;
+            font-size: 0.08rem;
+          }
+
+          img {
+            height: 0.15rem;
+            width: 0.151rem;
+          }
         }
       }
     }
-  }
 
-  .subnav {
-    height: 0.7rem;
-    line-height: 1;
-    color: #fab701;
-    display: flex;
-    justify-content: space-around;
-    box-shadow: 0 0.03rem 0.03rem rgba(200, 200, 204, 0.8);
-    align-items: baseline;
-    padding-top: 0.12rem;
-
-    div {
-      text-align: center;
-      font-size: 0.1rem;
-
-      img {
-        margin-bottom: 0.04rem;
-      }
-    }
-  }
-
-  .header {
-    position: relative;
-    width: 100%;
-    height: 2rem;
-    background: #ddd;
-    color: #fff;
-    padding-top: 0.15rem;
-
-    .main {
-      padding: 0.12rem;
-    }
-
-    .main-nav {
-      margin-top: 0.3rem;
+    .subnav {
+      height: 0.7rem;
+      line-height: 1;
+      color: #fab701;
       display: flex;
       justify-content: space-around;
+      box-shadow: 0 0.03rem 0.03rem rgba(200, 200, 204, 0.8);
+      align-items: baseline;
+      padding-top: 0.12rem;
 
       div {
         text-align: center;
+        font-size: 0.1rem;
 
-        .main-nav-name {
-          height: 0.24rem;
-          text-align: center;
-          margin-top: 0.028rem;
-          word-wrap: break-word;
-          max-width: 0.637rem;
-          font-size: 0.11rem;
-          line-height: 0.1rem;
-
-          &:last-child {
-            line-height: 0.12rem;
-          }
-        }
-
-        .icons-bg {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background: #fff;
-          border-radius: 50%;
-          height: 0.637rem;
-          width: 0.637rem;
-
-          img {
-            max-width: 0.344rem;
-            max-height: 0.344rem;
-          }
+        img {
+          margin-bottom: 0.04rem;
         }
       }
     }
 
-    .title {
-      font-size: 0.3rem;
-      height: 0.41rem;
-      line-height: 0.41rem;
-      text-align: center;
+    .header {
+      position: relative;
+      width: 100%;
+      height: 2rem;
+      background: #ddd;
+      color: #fff;
+      padding-top: 0.15rem;
 
-      .hint {
-        position: absolute;
-        top: 0.15rem;
-        right: 0.32rem;
+      .main {
+        padding: 0.12rem;
+      }
 
-        & /deep/ .ivu-badge-count {
-          top: -0.05rem;
+      .main-nav {
+        margin-top: 0.3rem;
+        display: flex;
+        justify-content: space-around;
+
+        div {
+          text-align: center;
+
+          .main-nav-name {
+            height: 0.24rem;
+            text-align: center;
+            margin-top: 0.028rem;
+            word-wrap: break-word;
+            max-width: 0.637rem;
+            font-size: 0.11rem;
+            line-height: 0.1rem;
+
+            &:last-child {
+              line-height: 0.12rem;
+            }
+          }
+
+          .icons-bg {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
+            border-radius: 50%;
+            height: 0.637rem;
+            width: 0.637rem;
+
+            img {
+              max-width: 0.344rem;
+              max-height: 0.344rem;
+            }
+          }
         }
+      }
 
-        img {
-          height: 0.2rem;
-          width: 0.2rem;
+      .title {
+        font-size: 0.3rem;
+        height: 0.41rem;
+        line-height: 0.41rem;
+        text-align: center;
+
+        .hint {
+          position: absolute;
+          top: 0.15rem;
+          right: 0.32rem;
+
+          & /deep/ .ivu-badge-count {
+            top: -0.05rem;
+          }
+
+          img {
+            height: 0.2rem;
+            width: 0.2rem;
+          }
         }
       }
     }
   }
-}
 </style>

@@ -19,7 +19,7 @@
     <template v-if="activeKey=='Repair'">
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh(1)">
         <div v-show="AjaxData==''" class="text-center">No data.</div>
-        <section class="container" v-for="(item,index) in AjaxData" :key="index" @click="$router.push({name:'RequestDetail',params:{rid:item.pk,query:item.fields.status}})">
+        <section class="container" v-for="(item,index) in AjaxData" :key="index" @touchend="$router.push({name:'RequestDetail',params:{rid:item.pk,query:item.fields.status}})">
           <div class="date" v-text="item.fields.date"></div>
           <div class="detail">
             <div class="content">
@@ -43,7 +43,7 @@
     <template v-else-if="activeKey=='Parking'">
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh(3)">
         <div v-show="ParkingData==''" class="text-center">No data.</div>
-        <section class="container" v-for="(item,index) in ParkingData" :key="index" @click="$router.push({name:'ParkingDetail',params:{rid:item.pk,query:item.fields.status}})">
+        <section class="container" v-for="(item,index) in ParkingData" :key="index" @touchend="$router.push({name:'ParkingDetail',params:{rid:item.pk,query:item.fields.status}})">
           <div class="date" v-text="item.fields.date"></div>
           <div class="detail">
             <div class="content">
@@ -257,25 +257,7 @@
       this.activeKey = this.$store.state.ListType || "Repair";
     },
     activated() {
-      if (!this.$route.meta.isUseCache) {
-        // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
-        this.getAjax();
-      }
-      // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
-      this.$route.meta.isUseCache = false
-    },
-    beforeRouteEnter(to, from, next) {
-      // 路由导航钩子，此时还不能获取组件实例 `this`，所以无法在data中定义变量（利用vm除外）
-      // 参考 https://router.vuejs.org/zh-cn/advanced/navigation-guards.html
-      // 所以，利用路由元信息中的meta字段设置变量，方便在各个位置获取。这就是为什么在meta中定义isBack
-      // 参考 https://router.vuejs.org/zh-cn/advanced/meta.html
-      if (from.name == 'ParkingDetail' || from.name == 'RequestDetail') {
-        to.meta.isUseCache = true;
-        //判断是从哪个路由过来的，
-        //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
-      }
-
-      next();
+      this.getAjax();
     },
   };
 </script>
