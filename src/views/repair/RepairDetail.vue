@@ -43,8 +43,11 @@
             </div>
             <div v-html="item.content"></div>
           </div>
-          <Input v-model="replyInp" type="textarea" placeholder="Enter Reply content" />
+          <template v-if="AjaxData.status!=3">
+            <Input v-model="replyInp" type="textarea" placeholder="Enter Reply content" />
           <Button @click="SubmitReply" size="small" shape="circle" style="margin-top:.1rem;">Reply</Button>
+          </template>
+          
         </div>
       </div>
 

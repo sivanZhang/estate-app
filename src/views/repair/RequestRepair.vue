@@ -113,7 +113,7 @@ export default {
       PropertyData: []
     };
   },
-  created() {
+  activated() {
     GET_Property().then(res => {
       this.PropertyData = res.data;
       this.radio = this.PropertyData[0].id;
