@@ -102,7 +102,13 @@
         });
       },
       SubmitReply() {
-        let data;
+        let data = {
+            content: this.replyInp,
+            task_type: 0,
+            replier_id: this.$store.state.userId,
+            task_id: this.$route.params.rid
+          };
+        /* let data;
         if (this.replyData.length >= 1 && this.replyData[0].replier_id) {
           data = {
             content: this.replyInp,
@@ -118,7 +124,7 @@
             replier_id: this.$store.state.userId,
             task_id: this.$route.params.rid
           };
-        }
+        } */
 
         POST_Reply(data).then(res => {
           if (res.data.status == "ok") {
@@ -130,46 +136,6 @@
           }
         });
       },
-      // SubmitReply() {
-      //   // let data = {
-      //   //   content: this.replyInp,
-      //   //   task_type: 0,
-      //   //   replier_id: this.$store.state.userId,
-      //   //   task_id: this.$route.params.rid
-      //   // };
-      //   // if (this.replyData && this.replyData[1].receiver_id) {
-      //   //   data = Object.assign(
-      //   //     { receiver_id: this.replyData[1].receiver_id },
-      //   //     data
-      //   //   );
-      //   // }
-      //   let data;
-      //   if (this.replyData.length >= 1 && this.replyData[1].receiver_id!==null) {
-      //     data = {
-      //       content: this.replyInp,
-      //       task_type: 1,
-      //       receiver_id: this.replyData[1].replier_id,
-      //       replier_id: this.$store.state.userId,
-      //       task_id: this.$route.params.rid
-      //     };
-      //   }else{
-      //     data = {
-      //       content: this.replyInp,
-      //       task_type: 1,
-      //       replier_id: this.$store.state.userId,
-      //       task_id: this.$route.params.rid
-      //     };
-      //   }
-      //   POST_Reply(data).then(res => {
-      //     if (res.data.status == "ok") {
-      //       this.replyInp = "";
-      //       this.$toast(res.data.msg);
-      //       this.GetReplyList();
-      //     } else if (res.data.status == "error") {
-      //       this.$toast(res.data.msg);
-      //     }
-      //   });
-      // },
       CancelItem() {
         this.$dialog
           .confirm({
@@ -264,7 +230,7 @@
         }
       }
     },
-    created() {
+    activated() {
       let params = {
         repair_id: this.$route.params.rid
       };
@@ -272,15 +238,7 @@
         this.AjaxData = res.data.msg;
       });
       this.GetReplyList();
-      /* beforeRouteEnter (to, from, next) {
-    next(vm=>{
-
-    })
-  },
-  beforeRouteLeave (to, from, next) {
-    doument.
-  } */
-    }
+    },
   };
 </script>
 <style lang="less" scoped>

@@ -66,7 +66,6 @@ const routes = [{
         meta: {
             requireAuth: true,
             keepAlive: true,
-            isUseCache: false,
         }
     }, {
         path: '/repair/request-repair',

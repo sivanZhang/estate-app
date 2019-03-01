@@ -11,10 +11,24 @@
         size="large"
     ></Button>
     <van-nav-bar title="My Property" left-arrow @click-left="$router.go(-1)"/>
-    <section v-for="(item,index) in propertyList" :key="index">
+    <!-- <section v-for="(item,index) in propertyList" :key="index">
       {{item.room_number}}
       <span>{{item.building_name}}</span>
-    </section>
+    </section> -->
+
+
+    <template v-if="propertyList.length>1">
+        <div class="select container">
+          <div v-for="(item,index) in propertyList" :key="index">
+            <img src="@/assets/icons/house.png" alt>
+            <div>
+              <p>{{item.building_name}}</p>
+              <p>{{item.room_number}}</p>
+            </div>
+            <van-radio :name="item.id" checked-color="#07c160"></van-radio>
+          </div>
+        </div>
+    </template>
   </div>
 </template>
 
@@ -27,7 +41,6 @@ export default {
     };
   },
   created(){
-    
     GET_Property().then(res => {
       this.propertyList = res.data;
     });
@@ -37,7 +50,7 @@ export default {
 
 <style lang="less" scoped>
 #propertyList {
-  section {
+  /* section {
     display: flex;
     align-items: center;
     background-color: #ed8482;
@@ -49,6 +62,36 @@ export default {
     font-weight: 600;
     span {
       padding-left: 0.15rem;
+    }
+  } */
+  .select {
+    line-height: initial;
+    margin-top: .3rem;
+    & /deep/ .van-radio__input {
+      font-size: 0.2rem;
+    }
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row wrap;
+    & > div {
+      padding: 0 0.1rem;
+      margin-bottom: 0.3rem;
+      display: flex;
+      justify-content: space-between;
+      flex-flow: row wrap;
+      height: 0.6rem;
+      align-items: center;
+      width: 1.43rem;
+      background: linear-gradient(to bottom right, #fff, #dfdfea);
+      border-radius: 0.06rem;
+      & > div:last-of-type {
+        width: 100%;
+        text-align: right;
+      }
+      img {
+        width: 0.33rem;
+        height: 0.33rem;
+      }
     }
   }
 }

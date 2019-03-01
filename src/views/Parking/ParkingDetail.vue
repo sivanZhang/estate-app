@@ -8,7 +8,7 @@
         right: .15rem;
         bottom: .3rem;
         z-index:1000;color:#fab701;font-size:.18rem;border-color:#fab701"
-        size="large"
+      size="large"
     ></Button>
     <van-nav-bar title="Details" left-arrow @click-left="$router.go(-1)" fixed :border="false"/>
     <h3 class="container">{{title}}</h3>
@@ -96,8 +96,13 @@ export default {
       });
     },
     SubmitReply() {
-      let data;
-      if (this.replyData.length >= 1 && this.replyData[1].replier_id) {
+      let data = {
+        content: this.replyInp,
+        task_type: 1,
+        replier_id: this.$store.state.userId,
+        task_id: this.$route.params.rid
+      };
+      /*  if (this.replyData.length >= 1 && this.replyData[1].replier_id) {
         data = {
           content: this.replyInp,
           task_type: 1,
@@ -112,7 +117,7 @@ export default {
           replier_id: this.$store.state.userId,
           task_id: this.$route.params.rid
         };
-      }
+      } */
 
       POST_Reply(data).then(res => {
         if (res.data.status == "ok") {
@@ -210,7 +215,7 @@ export default {
       replyInp: ""
     };
   },
-  created() {
+  activated() {
     let params = {
       id: this.$route.params.rid
     };
@@ -223,7 +228,7 @@ export default {
 </script>
 <style lang="less" scoped>
 #Detail {
-  padding-bottom: .3rem;
+  padding-bottom: 0.3rem;
   .detail {
     .content {
       .item {

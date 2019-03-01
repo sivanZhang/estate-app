@@ -53,7 +53,7 @@ export default {
       notiData: []
     };
   },
-  created() {
+  activated() {
     GET_Notice()
       .then(res => {
         this.notiData = res.data.msg;

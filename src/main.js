@@ -18,7 +18,7 @@ import 'iview/dist/styles/iview.css';
 import touch from 'vue-directive-touch';
 Vue.use(touch);
 //滚动后不触发touchend事件；用touchend代替click解决移动端click时间延迟；
-(() => {
+/* (() => {
     var flag = false;
     window.addEventListener('touchmove', function (ev) {
         flag || (flag = true, window.addEventListener('touchend', stopTouchendPropagation, true));
@@ -31,13 +31,13 @@ Vue.use(touch);
             flag = false;
         }, 50);
     }
-})()
+})() */
 Vue.config.productionTip = false;
 import 'animate.css'
 //全局样式
 import '@/theme.less'
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount("#app");

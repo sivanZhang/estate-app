@@ -1,5 +1,5 @@
 <template>
-  <div id="reques">
+  <div id="reques" class="warp-pb container">
     <Button
       shape="circle"
       icon="ios-home"
@@ -270,7 +270,6 @@ export default {
   .common-inp {
     width: 100%;
   }
-  padding: 0 0.15rem;
   .van-nav-bar.van-hairline--bottom {
     margin: 0 -0.15rem;
   }

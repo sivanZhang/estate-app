@@ -37,7 +37,7 @@ export default {
       newsListData: []
     };
   },
-  created() {
+  activated() {
     GET_News().then(res => {
       this.newsListData = [...res.data.msg];
     });

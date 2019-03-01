@@ -33,7 +33,7 @@ export default {
       newsDetailData: {}
     };
   },
-  created() {
+  activated() {
     let params = {
       id: this.$route.params.nid
     };
