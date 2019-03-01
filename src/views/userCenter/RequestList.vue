@@ -19,7 +19,7 @@
     <template v-if="activeKey=='Repair'">
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh(1)">
         <div v-show="AjaxData==''" class="text-center">No data.</div>
-        <section class="container" v-for="(item,index) in AjaxData" :key="index" @touchend="$router.push({name:'RequestDetail',params:{rid:item.pk,query:item.fields.status}})">
+        <section class="container" v-for="(item,index) in AjaxData" :key="index" @click="$router.push({name:'RequestDetail',params:{rid:item.pk,query:item.fields.status}})">
           <div class="date" v-text="item.fields.date"></div>
           <div class="detail">
             <div class="content">
