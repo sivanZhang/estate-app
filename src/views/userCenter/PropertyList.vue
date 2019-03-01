@@ -25,7 +25,6 @@
               <p>{{item.building_name}}</p>
               <p>{{item.room_number}}</p>
             </div>
-            <van-radio :name="item.id" checked-color="#07c160"></van-radio>
           </div>
         </div>
     </template>
@@ -85,7 +84,7 @@ export default {
       background: linear-gradient(to bottom right, #fff, #dfdfea);
       border-radius: 0.06rem;
       & > div:last-of-type {
-        width: 100%;
+        flex: 1 1 auto;
         text-align: right;
       }
       img {
