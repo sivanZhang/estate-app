@@ -1,5 +1,5 @@
 <template>
-  <div id="Detail">
+  <div id="Detail" v-touch:left="onSwipeLeft">
     <Button
       shape="circle"
       icon="ios-home"
@@ -130,6 +130,9 @@ export default {
           this.$toast(res.data.msg);
         }
       });
+    },
+    onSwipeLeft() {
+      this.$router.go(-1);
     },
     CancelItem() {
       this.$dialog
