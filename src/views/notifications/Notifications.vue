@@ -8,7 +8,7 @@
         right: .15rem;
         bottom: .3rem;
         z-index:1000;color:#fab701;font-size:.18rem;border-color:#fab701"
-        size="large"
+      size="large"
     ></Button>
     <van-nav-bar title="Notifications" left-arrow @click-left="$router.go(-1)"/>
     <div class="subnav">
@@ -56,7 +56,16 @@ export default {
   activated() {
     GET_Notice()
       .then(res => {
-        this.notiData = res.data.msg;
+        this.notiData = [...res.data.msg];
+        function compare(p, cp) {
+          //这是比较函数
+          return function(m, n) {
+            var a = m[p][cp];
+            var b = n[p][cp];
+            return a - b; //升序
+          };
+        }
+        this.notiData.sort(compare("fields", "read"));
       })
       .catch(err => {});
   },
@@ -88,10 +97,19 @@ export default {
       POST_Notice(data).then(res => {
         this.$toast(res.data.msg);
         GET_Notice()
-      .then(res => {
-        this.notiData = res.data.msg;
-      })
-      .catch(err => {});
+          .then(res => {
+            this.notiData = [...res.data.msg];
+            function compare(p, cp) {
+              //这是比较函数
+              return function(m, n) {
+                var a = m[p][cp];
+                var b = n[p][cp];
+                return a - b; //升序
+              };
+            }
+            this.notiData.sort(compare("fields", "read"));
+          })
+          .catch(err => {});
       });
     },
     isRead(id) {

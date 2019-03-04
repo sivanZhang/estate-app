@@ -7,11 +7,11 @@
     <van-nav-bar title="My Request" left-arrow @click-left="$router.go(-1)" right-text="Create" @click-right="targetNewRequest" />
 
     <header class="container">
-      <img v-tap="search" src="@/assets/icons/search.png" alt>
+      <img @click="search" src="@/assets/icons/search.png" alt>
       <input @keydown.enter="search" type="search" v-model="searchVal" placeholder="search">
     </header>
     <div class="subnav">
-      <div v-for="(item,index) in menuList" :key="`nav${index}`" v-tap="change(item.name)">
+      <div v-for="(item,index) in menuList" :key="`nav${index}`" @click="change(item.name)">
         <img :src="activeKey==item.name?item.activeSrc:item.src">
         <p :class="{active:activeKey==item.name}" v-text="item.name"></p>
       </div>
@@ -19,7 +19,7 @@
     <template v-if="activeKey=='Repair'">
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh(1)">
         <div v-show="AjaxData==''" class="text-center">No data.</div>
-        <section class="container" v-for="(item,index) in AjaxData" :key="index" v-tap="$router.push({name:'RequestDetail',params:{rid:item.pk,query:item.fields.status}})">
+        <section class="container" v-for="(item,index) in AjaxData" :key="index" @click="$router.push({name:'RequestDetail',params:{rid:item.pk,query:item.fields.status}})">
           <div class="date" v-text="item.fields.date"></div>
           <div class="detail">
             <div class="content">
@@ -43,7 +43,7 @@
     <template v-else-if="activeKey=='Parking'">
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh(3)">
         <div v-show="ParkingData==''" class="text-center">No data.</div>
-        <section class="container" v-for="(item,index) in ParkingData" :key="index" v-tap="$router.push({name:'ParkingDetail',params:{rid:item.pk,query:item.fields.status}})">
+        <section class="container" v-for="(item,index) in ParkingData" :key="index" @click="$router.push({name:'ParkingDetail',params:{rid:item.pk,query:item.fields.status}})">
           <div class="date" v-text="item.fields.date"></div>
           <div class="detail">
             <div class="content">

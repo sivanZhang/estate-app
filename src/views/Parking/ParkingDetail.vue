@@ -1,5 +1,5 @@
 <template>
-  <div id="Detail" v-touch:left="onSwipeLeft">
+  <div id="Detail">
     <Button
       shape="circle"
       icon="ios-home"

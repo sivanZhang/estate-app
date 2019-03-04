@@ -20,7 +20,7 @@
           </div>
           <div class="main-nav-name">Repair</div>
         </div>
-        <div @click="$router.push('/bill/bill')">
+        <div><!-- @click="$router.push('/bill/bill')" -->
           <div class="icons-bg">
             <img src="@/assets/icons/Bitmap.png" alt>
           </div>
@@ -41,7 +41,6 @@
       <div>
         <img
           src="@/assets/icons/parked-car.png"
-          v-touch:long="alt"
           style="width:.309rem"
           alt
           @click="$router.push('/Parking/ReserveParkingSpot')"
