@@ -29,10 +29,8 @@
 </template>
 
 <script>
-  import SecurityCode from "vue-security-code";
   import { GET_Password, SET_Password } from "@/api/login";
   export default {
-    components: { SecurityCode },
     methods: {
       verify() {
         const rex = /\d{4}/;

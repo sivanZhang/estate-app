@@ -30,7 +30,6 @@
     "vue-directive-touch": "^1.0.26",
     "vue-event-calendar": "^1.5.2",
     "vue-router": "^3.0.1",
-    "vue-security-code": "^1.0.3",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
