@@ -1,5 +1,5 @@
 <template>
-  <div id="propertyList"  class="warp-pb">
+<div id="propertyList" v-hammer:swipe.left="onSwipeLeft" class="warp-pb">
     <Button
       shape="circle"
       icon="ios-home"
@@ -43,6 +43,11 @@ export default {
     GET_Property().then(res => {
       this.propertyList = res.data;
     });
+  },
+  methods:{
+    onSwipeLeft(){
+        this.$router.go(-1);
+      },
   }
 };
 </script>

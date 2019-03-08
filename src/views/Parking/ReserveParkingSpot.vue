@@ -25,19 +25,19 @@
         type="date"
         v-model="date1"
         placeholder="Select start date"
-        style="width: 200px;font-size:.12rem;height:.41rem;"
+        style="width: 100%;font-size:.13rem;height:.41rem;"
       ></DatePicker>
       <DatePicker
         type="date"
         v-model="date2"
         placeholder="Select end date"
-        style="width: 200px;font-size:.12rem;height:.41rem;"
+        style="width: 100%;font-size:.13rem;height:.41rem;"
       ></DatePicker>
       <div>I Need
         <InputNumber
           v-model="number"
           :min="1"
-          style="width: 1.3rem;border-radius:0;margin:0 .1rem"
+          style="width: 1.3rem;border-radius:0;margin:0 .1rem,text-align: center;"
         />parking spot
       </div>
       <h3>Vehicle Registration No.</h3>

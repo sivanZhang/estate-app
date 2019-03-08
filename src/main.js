@@ -2,6 +2,10 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import VueTouch from "vue-touch";
+Vue.use(VueTouch, {name: 'v-touch'})
+import { VueHammer } from 'vue2-hammer'
+Vue.use(VueHammer)
 //Vant框架
 import Vant from 'vant';
 import 'vant/lib/index.css';

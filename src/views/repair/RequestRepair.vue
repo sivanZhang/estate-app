@@ -54,7 +54,7 @@
           v-model="startTime"
           format="yyyy-MM-dd HH:mm"
           placeholder="Start date and time"
-          style="border-radius:0"
+          style="border-radius:0;width: 100%"
           small
         ></DatePicker>
       </div>
@@ -64,7 +64,7 @@
           v-model="endTime"
           format="yyyy-MM-dd HH:mm"
           placeholder="End date and time"
-          style="border-radius:0"
+          style="border-radius:0;width: 100%;"
         ></DatePicker>
       </div>
     </div>
