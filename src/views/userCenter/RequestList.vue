@@ -6,12 +6,7 @@
         z-index:1000;color:#fab701;font-size:.18rem;border-color:#fab701" size="large"></Button>
     <van-nav-bar title="My Request" left-arrow @click-left="$router.go(-1)" right-text="Create" @click-right="targetNewRequest" />
     <Search @onSearch="search" v-model="searchVal" />
-    <div class="subnav">
-      <div v-for="(item,index) in menuList" :key="`nav${index}`" @click="change(item.name)">
-        <img :src="activeKey==item.name?item.activeSrc:item.src">
-        <p :class="{active:activeKey==item.name}" v-text="item.name"></p>
-      </div>
-    </div>
+    <TabNav :activeKey="activeKey" :menuList="menuList" @tapChange="change" />
     <template v-if="activeKey=='Repair'">
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh(1)">
         <div v-show="AjaxData==''" class="text-center">No data.</div>
@@ -70,9 +65,11 @@
   import { GET_Parking, POST_Parking } from "@/api/paking";
   import Ajax from "@/axios";
   import Search from "@/components/search"
+  import TabNav from "@/components/tabNav"
   export default {
     components:{
-      Search
+      Search,
+      TabNav,
     },
     data() {
       return {
@@ -342,57 +339,6 @@
         display: inline-block;
         padding: 0 6px;
         font-size: 0.12rem;
-      }
-    }
-
-    .subnav {
-      height: 0.71rem;
-      line-height: 1;
-
-      display: flex;
-      justify-content: space-around;
-      box-shadow: 0 0.03rem 0.03rem rgba(200, 200, 204, 0.8);
-      align-items: baseline;
-      padding-top: 0.12rem;
-
-      div {
-        text-align: center;
-        font-size: 0.1rem;
-
-        p {
-          text-align: center;
-
-          &.active {
-            color: #fab701;
-          }
-        }
-
-        img {
-          display: inline-block;
-          height: 0.25rem;
-          width: auto;
-          margin-bottom: 0.04rem;
-          object-fit: initial;
-        }
-      }
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 0.08rem;
-      align-items: center;
-
-      img {
-        width: 0.2rem;
-        height: 0.2rem;
-      }
-
-      input {
-        flex: 1 1 auto;
-        margin-left: 0.23rem;
-        height: 0.36rem;
-        line-height: 0.36rem;
       }
     }
   }

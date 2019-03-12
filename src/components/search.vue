@@ -8,9 +8,6 @@
 <script>
   export default {
     name: "search",
-    data() {
-      return {};
-    },
     props: {
       value: String
     },
@@ -20,7 +17,6 @@
     },
     methods: {
       search() {
-        console.log('触发')
         this.$emit("onSearch");
       }
     }
@@ -38,7 +34,6 @@
       width: 0.2rem;
       height: 0.2rem;
     }
-
     input {
       flex: 1 1 auto;
       margin-left: 0.23rem;
