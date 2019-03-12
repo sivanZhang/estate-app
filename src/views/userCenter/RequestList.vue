@@ -5,11 +5,7 @@
         bottom: .3rem;
         z-index:1000;color:#fab701;font-size:.18rem;border-color:#fab701" size="large"></Button>
     <van-nav-bar title="My Request" left-arrow @click-left="$router.go(-1)" right-text="Create" @click-right="targetNewRequest" />
-
-    <header class="container">
-      <img @click="search" src="@/assets/icons/search.png" alt>
-      <input @keydown.enter="search" type="search" v-model="searchVal" placeholder="search">
-    </header>
+    <Search @onSearch="search" v-model="searchVal" />
     <div class="subnav">
       <div v-for="(item,index) in menuList" :key="`nav${index}`" @click="change(item.name)">
         <img :src="activeKey==item.name?item.activeSrc:item.src">
@@ -73,7 +69,11 @@
   import { GET_Repair, POST_Repair } from "@/api/repair";
   import { GET_Parking, POST_Parking } from "@/api/paking";
   import Ajax from "@/axios";
+  import Search from "@/components/search"
   export default {
+    components:{
+      Search
+    },
     data() {
       return {
         isLoading: false,
