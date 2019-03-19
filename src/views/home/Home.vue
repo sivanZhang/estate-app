@@ -1,5 +1,5 @@
 <template>
-  <div id="home">
+<div id="home">
     <div class="header">
       <div class="title">Home
         <div class="hint">
@@ -20,7 +20,8 @@
           </div>
           <div class="main-nav-name">Repair</div>
         </div>
-        <div><!-- @click="$router.push('/bill/bill')" -->
+        <div @click="$router.push('/bill/bill')">
+          <!-- @click="$router.push('/bill/bill')" -->
           <div class="icons-bg">
             <img src="@/assets/icons/Bitmap.png" alt>
           </div>
@@ -99,11 +100,7 @@ export default {
       newsListData: []
     };
   },
-  components: {},
   methods: {
-    alt() {
-      alert("changan");
-    },
     target() {
       this.$router.push("/notifications");
     }
@@ -118,7 +115,7 @@ export default {
     GET_News().then(res => {
       this.newsListData = [...res.data.msg];
     });
-  },
+  }
 };
 </script>
 
@@ -209,7 +206,8 @@ export default {
     position: relative;
     width: 100%;
     height: 2rem;
-    background: #ddd;
+    background: #ddd url("~@/assets/image/h4.jpg") no-repeat center center;
+    background-size: cover;
     color: #fff;
     padding-top: 0.15rem;
 

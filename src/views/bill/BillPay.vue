@@ -1,5 +1,5 @@
 <template>
-  <div id="billPay" v-swipeleft="onSwipeLeft">
+  <div id="billPay">
     <Button
       shape="circle"
       icon="ios-home"
@@ -49,9 +49,6 @@ export default {
     };
   },
   methods: {
-    onSwipeLeft() {
-      this.$router.go(-1);
-    }
   }
 };
 </script>
