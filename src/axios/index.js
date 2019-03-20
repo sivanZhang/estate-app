@@ -4,7 +4,7 @@ import qs from 'qs'
 import router from '@/router'
 const isPro = Object.is(process.env.NODE_ENV, 'production');
 let Ajax = axios.create({
-    baseURL: isPro ? 'https://levy.chidict.com/' : 'api/',
+    baseURL: isPro ? 'https://101.200.35.253' : 'api/', //'https://levy.chidict.com/'
     timeout: 10000,
     transformRequest: [data => {
         // 对 data 进行任意转换处理

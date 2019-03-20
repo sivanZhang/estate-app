@@ -6,7 +6,7 @@ import notice from "./notice";
 import login from "./login";
 import { Toast } from "vant";
 Vue.use(Router);
-const routes = [...login,...notice, ...otherRoutes],
+const routes = [...login, ...notice, ...otherRoutes],
     ROUTER = new Router({
         routes,
         scrollBehavior(to, from, savedPosition) {
@@ -21,7 +21,7 @@ const routes = [...login,...notice, ...otherRoutes],
         }
     });
 //进入页面时候的登陆拦截
-ROUTER.beforeEach((to, from, next) => {
+/* ROUTER.beforeEach((to, from, next) => {
         window.document.title = to.name || 'Estate';
         if (to.matched.some(r => r.meta.requireAuth)) {
             let token = store.state.estateToken || sessionStorage.getItem('estateToken');
@@ -39,10 +39,10 @@ ROUTER.beforeEach((to, from, next) => {
         } else {
             next();
         }
-    })
-    /* ROUTER.afterEach((to, from, next) => {
-        window.scrollTo(0, 0);
     }) */
+/* ROUTER.afterEach((to, from, next) => {
+    window.scrollTo(0, 0);
+}) */
 
 
 export default ROUTER;

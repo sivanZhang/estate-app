@@ -29,7 +29,7 @@ import 'iview/dist/styles/iview.css';
         }, 50);
     }
 })() */
-function vueTouch(el, binding, type) { //触屏函数
+/* function vueTouch(el, binding, type) { //触屏函数
   var _this = this;
   this.obj = el;
   this.binding = binding;
@@ -127,14 +127,13 @@ Vue.directive("longtap", { //长按事件
   bind: function(el, binding) {
     new vueTouch(el, binding, "longtap");
   }
-});
-
+}); */
 Vue.config.productionTip = false;
 import 'animate.css'
 //全局样式
 import '@/theme.less'
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount("#app");
