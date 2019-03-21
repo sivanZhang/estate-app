@@ -66,8 +66,8 @@
       <div class="mask">
         <div class="left" @click="$router.push('/news')">
           <img src="@/assets/icons/laba.svg" alt>
-          <p>News</p>
-          <van-icon name="arrow-down"/>
+          <p>All News</p>
+          <van-icon name="arrow-down" />
         </div>
         <div
           v-if="newsListData.length"
@@ -168,10 +168,10 @@ export default {
 
       .left {
         text-align: center;
+        font-size: 0.12rem;
 
         p {
           color: #e96f6c;
-          font-size: 0.08rem;
         }
 
         img {

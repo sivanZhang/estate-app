@@ -1,15 +1,6 @@
 <template>
   <div id="Detail">
-    <Button
-      shape="circle"
-      icon="ios-home"
-      to="/home"
-      style="position:fixed;
-        right: .15rem;
-        bottom: .3rem;
-        z-index:1000;color:#fab701;font-size:.18rem;border-color:#fab701"
-      size="large"
-    ></Button>
+    <goHome />
     <van-nav-bar title="Details" left-arrow @click-left="$router.go(-1)" fixed :border="false"/>
     <h3 class="container">{{title}}</h3>
     <div class="detail">

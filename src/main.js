@@ -129,6 +129,8 @@ Vue.directive("longtap", { //长按事件
   }
 }); */
 Vue.config.productionTip = false;
+import goHome from "./components/goHome";
+Vue.component('goHome', goHome)
 import 'animate.css'
 //全局样式
 import '@/theme.less'

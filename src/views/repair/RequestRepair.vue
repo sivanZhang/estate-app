@@ -1,22 +1,13 @@
 <template>
   <div id="reques" class="warp-pb container">
-    <Button
-      shape="circle"
-      icon="ios-home"
-      to="/home"
-      style="position:fixed;
-        right: .15rem;
-        bottom: .3rem;
-        z-index:1000;color:#fab701;font-size:.18rem;border-color:#fab701"
-        size="large"
-    ></Button>
+    <goHome/>
     <van-nav-bar
       title="Request Repair"
       left-arrow
       @click-left="$router.go(-1)"
       @click-right="toList"
     >
-      <van-icon name="description" slot="right"/>
+     <Icon type="md-list" slot="right" />
     </van-nav-bar>
     <!-- right-text="save" -->
     <template v-show="PropertyData.length>1">

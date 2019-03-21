@@ -1,15 +1,6 @@
 <template>
-  <v-touch id="notifications" tag="div" v-on:swipeleft="onSwipeLeft">
-    <Button
-      shape="circle"
-      icon="ios-home"
-      to="/home"
-      style="position:fixed;
-        right: .15rem;
-        bottom: .3rem;
-        z-index:1000;color:#fab701;font-size:.18rem;border-color:#fab701"
-      size="large"
-    ></Button>
+  <div id="notifications">
+    <goHome />
     <van-nav-bar title="Notifications" left-arrow @click-left="$router.go(-1)"/>
     <div class="subnav">
       <div>
@@ -42,7 +33,7 @@
         </div>
       </div>
     </section>
-  </v-touch>
+  </div>
 </template>
 
 <script>
@@ -71,9 +62,6 @@ export default {
       .catch(err => {});
   },
   methods: {
-    onSwipeLeft() {
-      this.$router.go(-1);
-    },
     target_detail(data) {
       this.isRead(data.pk);
       if (data.fields.category == 0) {

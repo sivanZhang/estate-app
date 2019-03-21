@@ -1,6 +1,7 @@
 <template>
   <div id="setting">
     <van-nav-bar title="Settings" left-arrow @click-left="$router.go(-1)"/>
+    <goHome />
     <section @click="LogOut">
       <div>Log out</div>
       <div>

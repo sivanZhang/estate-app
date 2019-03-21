@@ -1,5 +1,6 @@
 <template>
   <div>
+    <goHome/>
     <van-nav-bar title="Confirm Payment" left-arrow @click-left="$router.go(-1)" fixed :border="false" />
     Confirm Payment
   </div>

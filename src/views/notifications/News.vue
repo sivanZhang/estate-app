@@ -1,17 +1,8 @@
 <template>
   <div id="news">
-    <Button
-      shape="circle"
-      icon="ios-home"
-      to="/home"
-      style="position:fixed;
-        right: .15rem;
-        bottom: .3rem;
-        z-index:1000;color:#fab701;font-size:.18rem;border-color:#fab701"
-        size="large"
-    ></Button>
+    <goHome />
     <van-nav-bar title="News" left-arrow @click-left="$router.go(-1)">
-      <van-icon name="description" slot="right"/>
+      <Icon type="md-list" slot="right" />
     </van-nav-bar>
     <section
       class="news-item"

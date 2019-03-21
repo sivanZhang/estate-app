@@ -1,9 +1,6 @@
 <template>
   <div id="RepairList" class="warp-pb">
-    <Button shape="circle" icon="ios-home" to="/home" style="position:fixed;
-        right: .15rem;
-        bottom: .3rem;
-        z-index:1000;color:#fab701;font-size:.18rem;border-color:#fab701" size="large"></Button>
+    <goHome />
     <van-nav-bar title="My Request" left-arrow @click-left="$router.go(-1)" right-text="Create" @click-right="targetNewRequest" />
     <Search @onSearch="search" v-model="searchVal" />
     <TabNav :activeKey="activeKey" :menuList="menuList" @tapChange="change" />
@@ -271,7 +268,7 @@
       color: #f5a623;
     }
 
-    .completed {
+    .accept {
       color: #41b886;
     }
 
@@ -287,7 +284,7 @@
       color: #ed8482;
     }
 
-    .accept {
+    .completed {
       color: #7db8fd;
     }
 
