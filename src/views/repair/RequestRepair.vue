@@ -1,13 +1,23 @@
 <template>
   <div id="reques" class="warp-pb container">
     <goHome/>
+
+    <van-popup v-model="show" position="bottom">
+      <van-datetime-picker
+        v-model="startTime"
+        type="datetime"
+        :min-date="new Date()"
+        @confirm="pickSucsses"
+        @cancel="show=!show"
+      />
+    </van-popup>
     <van-nav-bar
       title="Request Repair"
       left-arrow
       @click-left="$router.go(-1)"
       @click-right="toList"
     >
-     <Icon type="md-list" slot="right" />
+      <Icon type="md-list" slot="right"/>
     </van-nav-bar>
     <!-- right-text="save" -->
     <template v-show="PropertyData.length>1">
@@ -40,14 +50,17 @@
     <h3>Preferred Date and Time</h3>
     <div class="date-time">
       <div>
-        <DatePicker
+        <div @click="pickStart">
+          <input type="test" :value="startTime" placeholder="Start Date and time" disabled>
+        </div>
+        <!-- <DatePicker
           type="datetime"
           v-model="startTime"
           format="yyyy-MM-dd HH:mm"
           placeholder="Start date and time"
           style="border-radius:0;width: 100%"
           small
-        ></DatePicker>
+        ></DatePicker> -->
       </div>
       <div>
         <DatePicker
@@ -64,8 +77,8 @@
     </h3>
     <template v-if="checked">
       <h3>Contact Details</h3>
-    <input v-model="phone" class="Contact" type="text" placeholder="Phone number">
-    <input v-model="email" class="Contact" type="text" placeholder="Email">
+      <input v-model="phone" class="Contact" type="text" placeholder="Phone number">
+      <input v-model="email" class="Contact" type="text" placeholder="Email">
     </template>
     <h3 class="note">
       Note
@@ -81,6 +94,7 @@ import { GET_Property } from "@/api/login";
 export default {
   data() {
     return {
+      show: false,
       phone: "",
       email: "",
       startTime: "",
@@ -111,6 +125,12 @@ export default {
     });
   },
   methods: {
+    pickSucsses(value){
+      alert(value)
+    },
+    pickStart(){
+      this.show=!this.show
+    },
     toList() {
       this.$store.commit("setListType", "Repair");
       this.$router.push({
