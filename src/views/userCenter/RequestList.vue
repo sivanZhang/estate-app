@@ -21,7 +21,7 @@
                 <div class="draft">cancel</div>
               </template>
               <template v-else>
-                <van-icon @click.stop="deleteRepair(item.pk)" name="delete" />
+                <Icon type="md-trash" style="font-size:.2rem"  @click.stop="deleteRepair(item.pk)"/>
               </template>
             </div>
           </div>

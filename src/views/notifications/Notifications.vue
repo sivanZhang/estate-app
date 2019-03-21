@@ -29,7 +29,7 @@
           <div class="name">{{item.fields.title}}</div>
           <div class="date">{{item.fields.date.split(' ')[0]}}</div>
           <div class="msg" v-html="item.fields.content"></div>
-          <Icon @click.stop="deleteNotice(item.pk)" type="ios-trash-outline"/>
+          <Icon @click.stop="deleteNotice(item.pk)" type="md-trash" style="font-size:0.18rem"/>
         </div>
       </div>
     </section>

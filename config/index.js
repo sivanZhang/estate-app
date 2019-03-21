@@ -7,7 +7,7 @@ module.exports = {
         assetsPublicPath: '/',
         proxyTable: { //开发环境API
             '/api': {
-                target: 'https://101.200.35.253', //https://levy.chidict.com
+                target: 'https://levy.chidict.com',
                 changeOrigin: true, //跨域
                 pathRewrite: {
                     '^/api': '/'
