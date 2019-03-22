@@ -92,6 +92,7 @@
 
   .input-container {
     width: @width;
+    height: .39rem;/* border特效 */
     position: relative;
     display: flex;
     -webkit-box-orient: vertical;
@@ -100,6 +101,10 @@
     -ms-flex-align: start;
     align-items: flex-start;
     margin: 0 auto;
+    justify-content: center;
+    &+.input-container{
+      margin-top: .06rem;
+    }
   }
 
   .input-container input {
@@ -109,10 +114,10 @@
     outline: none;
     border: none;
     width: 100%;
-    padding: 10px 0 6px;
+    padding: .1rem 0 .06rem;
     font-size: 0.14rem;
-    border-bottom: 1px solid @border-bottom-color;
-    text-indent: 10px;
+    border-bottom: .01rem solid @border-bottom-color;
+    text-indent: .1rem;
   }
 
   .input-container input::-moz-placeholder {
@@ -139,36 +144,38 @@
     color: @label-font-color;
     -webkit-transform-origin: left bottom;
     transform-origin: left bottom;
-    transform: translate(0px, 34px);
+    transform: translate(0px, .33rem);
   }
 
   .input-container .bottom-line {
     order: 2;
     width: 0;
-    height: 2px;
+    height: .02rem;
     background: @focus-border-color;
     transition: all @transform-time;
   }
 
   .input-container input:focus {
-    border-bottom-color: #fff;
+    border-bottom-color: @border-bottom-color;
   }
 
-  .input-container input:focus~div {
+  .input-container input:focus~div.bottom-line {
     width: 100%;
+    height: .02rem;
+    order: 2;
   }
 
   .input-container input:focus+label,
   .input-container input:not(:placeholder-shown)+label {
     color: @label-focus-font-color;
-    transform: translate(10px, 12px) scale(@scale);
+    transform: translate(.1rem, .12rem) scale(@scale);
   }
 
   #login {
     padding-bottom: .7rem;
 
     .logo {
-      margin: 1.58rem auto 1rem;
+      margin: 1.56rem auto 1rem;
       text-align: center;
 
       img {
@@ -176,7 +183,7 @@
         width: 1.3rem;
         border-radius: 50%;
         background-color: #d8d8d8;
-        border: 1px solid #c8c8c8;
+        border: 1px solid @border-bottom-color;
       }
     }
 
@@ -190,7 +197,7 @@
       line-height: 0.7rem;
       padding: 0;
       color: #222329;
-      border-radius: 0px;
+      border-radius: 0;
     }
 
     .links {
@@ -200,7 +207,7 @@
       font-size: 0.14rem;
 
       span {
-        padding: 0 6px;
+        padding: 0 .06rem;
       }
     }
   }

@@ -5,7 +5,7 @@
       <img src="@/assets/image/touxiang.png" alt="">
     </div>
     <h3>Need help with your password?</h3>
-    <p>Enter the Email you use for Estrata, and you will receive a verfication code from us.</p>
+    <p>Enter the Email you use for<br/>Estrata, and you will receive a<br/>verfication code from us.</p>
     <van-steps :active="active" class="container" active-color="#fad87b">
       <van-step>Email</van-step>
       <van-step>Code</van-step>
@@ -13,7 +13,7 @@
     </van-steps>
     <div class="form">
       <template v-if="active==0">
-        <input v-model="email" type="text" class="common-inp">
+        <input v-model="email" type="text" class="common-inp" placeholder="Email">
         <button @click="next" class="conmmt-btn">Next</button>
       </template>
       <template v-if="active==1">

@@ -23,13 +23,13 @@ export default {
 
 <style lang="less" scoped>
 .subnav {
-      height: 0.71rem;
+      height: 0.82rem;
       line-height: 1;
       display: flex;
       justify-content: space-around;
       box-shadow: 0 0.03rem 0.03rem rgba(200, 200, 204, 0.8);
       align-items: baseline;
-      padding-top: 0.12rem;
+      padding-top: 0.15rem;
       div {
         text-align: center;
         font-size: 0.1rem;

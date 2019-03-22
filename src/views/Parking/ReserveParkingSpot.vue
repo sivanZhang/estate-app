@@ -12,11 +12,11 @@
       <div class="date-time">
         <div @click.capture="pickStart(1)">
           <img src="@/assets/icons/date.png" alt="">
-          <input type="text" :value="date1" placeholder="Start Date and time" disabled>
+          <input type="text" :value="date1" placeholder="Start date" disabled>
         </div>
         <div @click.capture="pickStart(2)">
           <img src="@/assets/icons/date.png" alt="">
-          <input type="text" :value="date2" placeholder="End date and time" disabled>
+          <input type="text" :value="date2" placeholder="End date" disabled>
         </div>
       </div>
       <div class="number">I Need
