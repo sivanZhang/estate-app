@@ -1,23 +1,12 @@
 <template>
   <div id="reques" class="warp-pb container">
-    <goHome/>
+    <goHome />
 
     <van-popup v-model="show" position="bottom">
-      <van-datetime-picker
-        v-model="startTime"
-        type="datetime"
-        :min-date="new Date()"
-        @confirm="pickSucsses"
-        @cancel="show=!show"
-      />
+      <van-datetime-picker type="datetime" :min-date="new Date()" @confirm="pickSucsses" @cancel="show=!show" />
     </van-popup>
-    <van-nav-bar
-      title="Request Repair"
-      left-arrow
-      @click-left="$router.go(-1)"
-      @click-right="toList"
-    >
-      <Icon type="md-list" slot="right"/>
+    <van-nav-bar title="Request Repair" left-arrow @click-left="$router.go(-1)" @click-right="toList">
+      <Icon type="ios-list" slot="right" style="font-size:.28rem"/>
     </van-nav-bar>
     <!-- right-text="save" -->
     <template v-show="PropertyData.length>1">
@@ -49,31 +38,30 @@
     <div class="line"></div>
     <h3>Preferred Date and Time</h3>
     <div class="date-time">
-      <div>
-        <div @click="pickStart">
-          <input type="test" :value="startTime" placeholder="Start Date and time" disabled>
-        </div>
-        <!-- <DatePicker
+      <div @click.capture="pickStart(1)">
+        <img src="@/assets/icons/date.png" alt="">
+        <input type="text" :value="startTime" placeholder="Start Date and time" disabled>
+      </div>
+      <div @click.capture="pickStart(2)">
+        <img src="@/assets/icons/date.png" alt="">
+        <input type="text" :value="endTime" placeholder="End date and time" disabled>
+      </div>
+      <!-- <div>    
+        <DatePicker
           type="datetime"
           v-model="startTime"
           format="yyyy-MM-dd HH:mm"
           placeholder="Start date and time"
           style="border-radius:0;width: 100%"
           small
-        ></DatePicker> -->
-      </div>
-      <div>
-        <DatePicker
-          type="datetime"
-          v-model="endTime"
-          format="yyyy-MM-dd HH:mm"
-          placeholder="End date and time"
-          style="border-radius:0;width: 100%;"
         ></DatePicker>
       </div>
+      <div>
+        <DatePicker type="datetime" v-model="endTime" format="yyyy-MM-dd HH:mm" placeholder="End date and time" style="border-radius:0;width: 100%;"></DatePicker>
+      </div> -->
     </div>
     <h3>Contact me before coming
-      <van-switch v-model="checked" active-color="#41b886" size=".17rem"/>
+      <van-switch v-model="checked" active-color="#41b886" size=".17rem" />
     </h3>
     <template v-if="checked">
       <h3>Contact Details</h3>
@@ -89,244 +77,285 @@
   </div>
 </template>
 <script>
-import { POST_Repair } from "@/api/repair";
-import { GET_Property } from "@/api/login";
-export default {
-  data() {
-    return {
-      show: false,
-      phone: "",
-      email: "",
-      startTime: "",
-      endTime: "",
-      facility: "",
-      scaleList: [
-        {
-          content: "average"
-        },
-        {
-          content: "urgent"
-        },
-        {
-          content: "super urgent"
-        }
-      ],
-      note: "",
-      radio: "",
-      checked: false,
-      select: "average",
-      PropertyData: []
-    };
-  },
-  activated() {
-    GET_Property().then(res => {
-      this.PropertyData = res.data;
-      this.radio = this.PropertyData[0].id;
-    });
-  },
-  methods: {
-    pickSucsses(value){
-      alert(value)
-    },
-    pickStart(){
-      this.show=!this.show
-    },
-    toList() {
-      this.$store.commit("setListType", "Repair");
-      this.$router.push({
-        name: "RequestList"
-      });
-    },
-    submit() {
-      if (this.facility == "") {
-        this.$toast(`Need to complete facility!`);
-        return;
-      }
-      if (this.checked == true) {
-        if (!this.phone || !this.email) {
-          this.$toast(`Need to complete phone and email!`);
-          return;
-        }
-        let reg = /^\d+$/;
-        if (false == reg.test(this.phone)) {
-          this.$toast("Wrong format of phone number!");
-          return;
-        }
-        let regE = /^[\w.\-]+@(?:[a-z0-9]+(?:-[a-z0-9]+)*\.)+[a-z]{2,3}$/;
-        if (false == regE.test(this.email)) {
-          this.$toast("Wrong format of email!");
-          return;
-        }
-      }
-      let level = 0;
-      switch (this.select) {
-        case `average`:
-          level = 0;
-          break;
-        case `urgent`:
-          level = 1;
-          break;
-        case `super urgent`:
-          level = 2;
-          break;
-      }
-      let data = {
-        property_id: this.radio,
-        facility: this.facility,
-        level,
-        starttime: new Date(this.startTime)
-          .toISOString()
-          .replace("T", " ")
-          .replace(/\..+$/, ""),
-        endtime: new Date(this.endTime)
-          .toISOString()
-          .replace("T", " ")
-          .replace(/\..+$/, ""),
-        confirm: this.checked ? 1 : 0,
-        phone: this.phone,
-        email: this.email,
-        note: this.note
+  import { POST_Repair } from "@/api/repair";
+  import { GET_Property } from "@/api/login";
+  export default {
+    data() {
+      return {
+        type: 0,
+        show: false,
+        phone: "",
+        email: "",
+        startTime: "",
+        endTime: "",
+        facility: "",
+        scaleList: [{
+            content: "average"
+          },
+          {
+            content: "urgent"
+          },
+          {
+            content: "super urgent"
+          }
+        ],
+        note: "",
+        radio: "",
+        checked: false,
+        select: "average",
+        PropertyData: []
       };
-      POST_Repair(data).then(res => {
-        this.$toast(res.data.msg);
-        if (res.data.status == "ok") {
-          this.$store.commit("setListType", "Repair");
-          this.$router.push({
-            name: "RequestList"
-          });
-        }
+    },
+    activated() {
+      GET_Property().then(res => {
+        this.PropertyData = res.data;
+        this.radio = this.PropertyData[0].id;
       });
+    },
+    methods: {
+      pickSucsses(value) {
+        if (this.type == 1) {
+          this.startTime = value.toJSON().replace("T", " ")
+          .replace(/\..+$/, "");
+        }
+        if (this.type == 2) {
+          this.endTime = value.toJSON().replace("T", " ")
+          .replace(/\..+$/, "");
+        }
+        this.show = false;
+      },
+      pickStart(type) {
+        this.show = true;
+        this.type = type;
+      },
+      toList() {
+        this.$store.commit("setListType", "Repair");
+        this.$router.push({
+          name: "RequestList"
+        });
+      },
+      submit() {
+        if (this.facility == "") {
+          this.$toast(`Need to complete facility!`);
+          return;
+        }
+        if(!this.startTime || !this.endTime){
+          this.$toast(`Unselected time!`);
+          return;
+        }
+        if (this.checked == true) {
+          if (!this.phone || !this.email) {
+            this.$toast(`Need to complete phone and email!`);
+            return;
+          }
+          let reg = /^\d+$/;
+          if (false == reg.test(this.phone)) {
+            this.$toast("Wrong format of phone number!");
+            return;
+          }
+          let regE = /^[\w.\-]+@(?:[a-z0-9]+(?:-[a-z0-9]+)*\.)+[a-z]{2,3}$/;
+          if (false == regE.test(this.email)) {
+            this.$toast("Wrong format of email!");
+            return;
+          }
+        }
+        let level = 0;
+        switch (this.select) {
+          case `average`:
+            level = 0;
+            break;
+          case `urgent`:
+            level = 1;
+            break;
+          case `super urgent`:
+            level = 2;
+            break;
+        }
+        let data = {
+          property_id: this.radio,
+          facility: this.facility,
+          level,
+          starttime: this.startTime,
+          endtime: this.endTime,
+          confirm: this.checked ? 1 : 0,
+          phone: this.phone,
+          email: this.email,
+          note: this.note
+        };
+        POST_Repair(data).then(res => {
+          this.$toast(res.data.msg);
+          if (res.data.status == "ok") {
+            this.$store.commit("setListType", "Repair");
+            this.$router.push({
+              name: "RequestList"
+            });
+          }
+        });
+      }
     }
-  }
-};
+  };
 </script>
 <style lang="less" scoped>
-#reques {
-  & /deep/ .van-radio__icon .van-icon {
-    background-color: #fff;
-  }
-  button.conmmt-btn {
-    display: block;
-    width: 2.33rem;
-    height: 0.51rem;
-    border-radius: 0.51rem;
-    margin: 0 auto;
-    background-color: #fad87b;
-    margin-top: 0.17rem;
-    font-size: 0.15rem;
-  }
-  textarea {
-    display: block;
-    border: 1px solid #c8c8cc;
-    resize: none;
-    width: 100%;
-    height: 0.85rem;
-  }
-  .Contact {
-    border-bottom: 1px solid #c8c8cc;
-    width: 100%;
-    padding: 0.06rem 0.12rem;
-    font-size: 0.15rem;
-  }
-  .date-time {
-    & > div {
-      & + div {
-        margin-top: 0.1rem;
+  #reques {
+    & /deep/ .van-radio__icon .van-icon {
+      background-color: #fff;
+    }
+
+    button.conmmt-btn {
+      display: block;
+      width: 2.33rem;
+      height: 0.51rem;
+      border-radius: 0.51rem;
+      margin: 0 auto;
+      background-color: #fad87b;
+      margin-top: 0.17rem;
+      font-size: 0.15rem;
+    }
+
+    textarea {
+      display: block;
+      border: 1px solid #c8c8cc;
+      resize: none;
+      width: 100%;
+      height: 0.85rem;
+    }
+
+    .Contact {
+      border-bottom: 1px solid #c8c8cc;
+      width: 100%;
+      padding: 0.06rem 0.12rem;
+      font-size: 0.15rem;
+    }
+
+    .date-time {
+      display: flex;
+      justify-content: space-between;
+      &>div {
+        border:.01rem solid #c8c8c8;
+        width: 1.5rem;
+        height: .39rem;
+        display: flex;
+        align-items: center;
+        img{
+          width: .2rem;
+          height: .2rem;
+          margin:0 .08rem;
+        }
+        input{
+          background: none;
+        }
+      }
+
+      font-size: 0.12rem;
+    }
+
+    .line {
+      height: 0.02rem;
+      width: 2.76rem;
+      background-color: #c7c7c7;
+      margin: 0 auto;
+      z-index: -1;
+    }
+
+    .scale {
+      color: #979797;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.12rem;
+      text-align: center;
+
+      &>div {
+        width: 26%;
+        position: relative;
+        height: 0.35rem;
+
+        &>p:not(.active) {
+          position: absolute;
+          bottom: 0.01rem;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 0.01rem;
+          height: 0.06rem;
+          background-color: #c7c7c7;
+          z-index: -1;
+        }
+
+        &>img {
+          position: absolute;
+          bottom: 0.01rem;
+          left: 50%;
+          transform: translate(-50%, 30%);
+          z-index: 1;
+          width: 0.18rem;
+          height: 0.25rem;
+          object-fit: initial;
+        }
       }
     }
-    font-size: 0.12rem;
-  }
-  .line {
-    height: 0.02rem;
-    width: 2.76rem;
-    background-color: #c7c7c7;
-    margin: 0 auto;
-    z-index: -1;
-  }
-  .scale {
-    color: #979797;
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.12rem;
-    text-align: center;
-    & > div {
-      width: 26%;
-      position: relative;
-      height: 0.35rem;
-      & > p:not(.active) {
-        position: absolute;
-        bottom: 0.01rem;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 0.01rem;
-        height: 0.06rem;
-        background-color: #c7c7c7;
-        z-index: -1;
-      }
-      & > img {
-        position: absolute;
-        bottom: 0.01rem;
-        left: 50%;
-        transform: translate(-50%, 30%);
-        z-index: 1;
-        width: 0.18rem;
-        height: 0.25rem;
-        object-fit: initial;
+
+    .urgency-level {
+      margin-top: 0.06rem;
+    }
+
+    .common-inp {
+      width: 100%;
+    }
+
+    .van-nav-bar.van-hairline--bottom {
+      margin: 0 -0.15rem;
+    }
+
+    h3 {
+      font-size: 0.15rem;
+      height: 0.46rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.04rem;
+
+      &.note {
+        justify-content: flex-start;
+
+        span {
+          color: #c8c8cc;
+          font-weight: 300;
+        }
       }
     }
-  }
-  .urgency-level {
-    margin-top: 0.06rem;
-  }
-  .common-inp {
-    width: 100%;
-  }
-  .van-nav-bar.van-hairline--bottom {
-    margin: 0 -0.15rem;
-  }
-  h3 {
-    font-size: 0.15rem;
-    height: 0.46rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 0.04rem;
-    &.note {
-      justify-content: flex-start;
-      span {
-        color: #c8c8cc;
-        font-weight: 300;
+
+    .select {
+      line-height: initial;
+
+      & /deep/ .van-radio__input {
+        font-size: 0.2rem;
       }
-    }
-  }
-  .select {
-    line-height: initial;
-    & /deep/ .van-radio__input {
-      font-size: 0.2rem;
-    }
-    display: flex;
-    justify-content: space-between;
-    flex-flow: row wrap;
-    & > div {
-      padding: 0 0.1rem;
-      margin-bottom: 0.3rem;
+
       display: flex;
       justify-content: space-between;
       flex-flow: row wrap;
-      height: 0.93rem;
-      align-items: center;
-      width: 1.43rem;
-      background: linear-gradient(to bottom right, #fff, #dfdfea);
-      border-radius: 0.06rem;
-      & > div:last-of-type {
-        width: 100%;
-        text-align: right;
-      }
-      img {
-        width: 0.33rem;
-        height: 0.33rem;
+
+      &>div {
+        padding: 0 0.1rem;
+        margin-bottom: 0.3rem;
+        display: flex;
+        justify-content: space-between;
+        flex-flow: row wrap;
+        height: 0.93rem;
+        align-items: center;
+        width: 1.43rem;
+        background: linear-gradient(to bottom right, #fff, #dfdfea);
+        border-radius: 0.06rem;
+
+        &>div:last-of-type {
+          width: 100%;
+          text-align: right;
+        }
+
+        img {
+          width: 0.33rem;
+          height: 0.33rem;
+        }
       }
     }
   }
-}
 </style>

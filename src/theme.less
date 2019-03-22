@@ -61,11 +61,11 @@
 }
 .common-inp {
   background-color: #fff;
-  border: 1px solid #c8c8cc;
+  border: .01rem solid #c8c8cc;
   color: #24292e;
   font-size: .14rem;
-  line-height: .41rem;
-  min-height: .41rem;
+  line-height: .39rem;
+  min-height: .39rem;
   outline: none;
   padding: 0 .12rem;
   vertical-align: middle;
@@ -151,7 +151,14 @@ input[type="password"]:focus,
 textarea:focus {
   -webkit-box-shadow: 0 0 0 1000px white inset;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
 
+input[type="number"] {
+  -moz-appearance: textfield;
+}
 label {
   font-weight: 300;
 }
@@ -181,7 +188,6 @@ label {
 .van-nav-bar__left, .van-nav-bar__right{
   font-size: .13rem
 }
-.van-nav-bar__right i{
+.van-nav-bar__right{
  line-height: .3rem;
- font-size: .18rem;
 }

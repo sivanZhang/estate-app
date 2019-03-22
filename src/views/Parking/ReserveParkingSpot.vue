@@ -1,18 +1,26 @@
 <template>
   <div>
+    <van-popup v-model="show" position="bottom">
+      <van-datetime-picker type="date" :min-date="new Date()" @confirm="pickSucsses" @cancel="show=!show" />
+    </van-popup>
     <goHome />
     <van-nav-bar title="Reserve Parking Spot" left-arrow @click-left="$router.go(-1)" @click-right="toList">
-      <!--  <van-icon name="description" slot="right"/> -->
-      <Icon type="md-list" slot="right" />
-
+      <Icon type="ios-list" slot="right" style="font-size:.28rem" />
     </van-nav-bar>
     <div class="container">
       <h3>Request date</h3>
-
-      <DatePicker type="date" v-model="date1" placeholder="Select start date" style="width: 100%;font-size:.13rem;height:.41rem;"></DatePicker>
-      <DatePicker type="date" v-model="date2" placeholder="Select end date" style="width: 100%;font-size:.13rem;height:.41rem;"></DatePicker>
-      <div>I Need
-        <input type="number" v-model="number" :min="1" />
+      <div class="date-time">
+        <div @click.capture="pickStart(1)">
+          <img src="@/assets/icons/date.png" alt="">
+          <input type="text" :value="date1" placeholder="Start Date and time" disabled>
+        </div>
+        <div @click.capture="pickStart(2)">
+          <img src="@/assets/icons/date.png" alt="">
+          <input type="text" :value="date2" placeholder="End date and time" disabled>
+        </div>
+      </div>
+      <div class="number">I Need
+        <input class="common-inp" type="number" v-model="number" :min="1" />
         parking spot
       </div>
       <h3>Vehicle Registration No.</h3>
@@ -48,10 +56,25 @@
         email: "",
         note: "",
         date1: "",
-        date2: ""
+        date2: "",
+        show: false,
+        type: 0,
       };
     },
     methods: {
+      pickSucsses(value) {
+        if (this.type == 1) {
+          this.date1 = value.toJSON().split("T")[0];
+        }
+        if (this.type == 2) {
+          this.date2 = value.toJSON().split("T")[0];
+        }
+        this.show = false;
+      },
+      pickStart(type) {
+        this.show = true;
+        this.type = type;
+      },
       toList() {
         this.$store.commit("setListType", "Parking");
         this.$router.push({
@@ -70,10 +93,8 @@
 
         let data = {
           number: this.number,
-          start: `${this.date1.getFullYear()}-${this.date1.getMonth() +
-          1}-${this.date1.getDate()}`,
-          end: `${this.date2.getFullYear()}-${this.date2.getMonth() +
-          1}-${this.date2.getDate()}`,
+          start: this.date1,
+          end: this.date2,
           note: `${this.note},${this.Registration}`,
           mgr_id: 1
         };
@@ -100,6 +121,35 @@
       margin: 0;
     }
 
+    .number {
+      margin: .4rem 0;
+    }
+
+    .date-time {
+      display: flex;
+      justify-content: space-between;
+
+      &>div {
+        border: .01rem solid #c8c8c8;
+        width: 1.5rem;
+        height: .39rem;
+        display: flex;
+        align-items: center;
+
+        img {
+          width: .2rem;
+          height: .2rem;
+          margin: 0 .08rem;
+        }
+
+        input {
+          background: none;
+        }
+      }
+
+      font-size: 0.12rem;
+    }
+
     .inputGroup /deep/ .ivu-input {
       height: 0.41rem;
       line-height: 0.41rem;
@@ -107,12 +157,8 @@
     }
 
     input[type='number'] {
-      height: 0.41rem;
-      line-height: 0.41rem;
-      font-size: 0.14rem;
-      width: 1rem;
+      width: 1.5rem;
       text-align: center;
-      border: 1px solid #c8c8cc;
       margin: 0 .1rem;
     }
 
