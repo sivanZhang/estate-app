@@ -6,7 +6,7 @@
       :value="value"
       @input="$emit('enterKeywords',$event.target.value)"
       type="serch"
-      placeholder="search"
+      :placeholder="searchText"
     >
   </header>
 </template>
@@ -15,7 +15,10 @@
 export default {
   name: "search",
   props: {
-    value: String
+    value: String,
+    searchText:{
+      default:'search',
+    }
   },
   model: {
     prop: "value",

@@ -1,6 +1,6 @@
 <template>
   <div id="Detail">
-    <goHome />
+    <goHome/>
     <van-nav-bar title="Details" left-arrow @click-left="$router.go(-1)" fixed :border="false"/>
     <h3 class="container">{{title}}</h3>
     <div class="detail">
@@ -10,10 +10,12 @@
         <p>{{`Ticket No.${AjaxData.code}`}}</p>
       </div>
       <div class="content">
-        <div class="item">Address
+        <div class="item">
+          Address
           <div class="blod">{{AjaxData.building}}</div>
         </div>
-        <div class="item">Urgency Level
+        <div class="item">
+          Urgency Level
           <div class="blod">{{level}}</div>
         </div>
         <div class="item">
@@ -21,27 +23,38 @@
           <div class="blod">Phone {{AjaxData.phone}}</div>
           <div class="blod">Email {{AjaxData.email}}</div>
         </div>
-        <div class="item">Note
+        <div class="item">
+          Note
           <div class="blod">{{AjaxData.note}}</div>
         </div>
         <div class="item">
           <div>Submitted</div>
           <div class="blod">{{AjaxData.end}}</div>
         </div>
-        <div class="item">
+        <div class="item" style="background-color: #efefef;">
           <div class="title">Replies:</div>
           <div class="reply" v-for="(item,index) of replyData" :key="index">
             <div>
               <span>{{item.replier_name}}:</span>
               <div>
                 <span class="date">{{item.date}}</span>
-                <Icon type="ios-trash-outline" @click="DeleteReply(item.pk)"/>
+                <img
+                  class="delete-icon"
+                  @click.stop="DeleteReply(item.pk)"
+                  src="@/assets/icons/delete.png"
+                  alt
+                >
               </div>
             </div>
             <div v-html="item.content"></div>
           </div>
           <template v-if="AjaxData.status!=3">
-            <Input v-model="replyInp" type="textarea" placeholder="Enter Reply content"/>
+            <Input
+              v-model="replyInp"
+              type="textarea"
+              placeholder="Enter Reply content"
+              style="border-color:red;"
+            />
             <Button @click="SubmitReply" size="small" shape="circle" style="margin-top:.1rem;">Reply</Button>
           </template>
         </div>
@@ -256,17 +269,29 @@ export default {
   padding-bottom: 0.3rem;
 
   .detail {
+    & /deep/ .ivu-btn {
+    color: #fad87b;
+    border-color: #fad87b;
+    font-weight: 600;
+  }
+    .delete-icon{
+      height: .16rem;
+      height: .16rem;
+      margin-left: .04rem;
+    }
     .content {
       .item {
-        div.reply {
-          margin: 0.08rem auto;
-
+        .reply {
+          padding: 0.1rem 0;
+          &+.reply{
+            border-top: .01rem solid #c8c8cc;
+          }
           div:first-child {
             display: flex;
             justify-content: space-between;
 
             & > span {
-              font-weight: 600;
+              font-family: "OpenSans-SemiBold";
             }
 
             & > div {
@@ -283,13 +308,6 @@ export default {
               color: #c8c8cc;
             }
           }
-
-          &:not(:last-child) {
-            & > div:last-child {
-              border-bottom: 1px solid #ddd;
-              padding-bottom: 0.08rem;
-            }
-          }
         }
 
         padding: 0.15rem;
@@ -304,12 +322,12 @@ export default {
     overflow: hidden;
 
     .footer {
-      font-weight: 600;
+      font-family: "OpenSans-SemiBold";
       background-color: #fad87b;
       border-radius: 0.04rem;
       text-align: center;
-      height: 0.63rem;
-      line-height: 0.63rem;
+      height: 0.6rem;
+      line-height: 0.6rem;
     }
 
     .header {
@@ -320,7 +338,7 @@ export default {
       }
 
       & > div {
-        font-weight: 600;
+        font-family: "OpenSans-SemiBold";
         font-size: 0.15rem;
       }
 
@@ -349,7 +367,7 @@ export default {
   }
 
   .blod {
-    font-weight: 600;
+    font-family: "OpenSans-SemiBold";
   }
 }
 </style>

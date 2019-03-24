@@ -8,7 +8,7 @@
       right-text="Create"
       @click-right="targetNewRequest"
     />
-    <Search @onSearch="search" v-model="searchVal"/>
+    <Search @onSearch="search" v-model="searchVal" :searchText="'ticket No'"/>
     <TabNav :activeKey="activeKey" :menuList="menuList" @tapChange="change"/>
     <template v-if="activeKey=='Repair'">
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh(1)">
@@ -352,12 +352,14 @@ export default {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+          line-height: 1.8;
         }
 
         p {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+          line-height: 1.8;
         }
       }
     }

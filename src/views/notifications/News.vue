@@ -2,7 +2,6 @@
   <div id="news">
     <goHome />
     <van-nav-bar title="News" left-arrow @click-left="$router.go(-1)">
-      <Icon type="md-list" slot="right" />
     </van-nav-bar>
     <section
       class="news-item"

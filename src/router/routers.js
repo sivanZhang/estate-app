@@ -31,6 +31,7 @@ const routes = [{
             import ('@/views/userCenter/MyAccount'),
         meta: {
             requireAuth: true,
+            keepAlive: true,
         }
     },
     {
@@ -48,6 +49,7 @@ const routes = [{
             import ('@/views/repair/RepairDetail'),
         meta: {
             requireAuth: true,
+            keepAlive: true,
         }
     },
     {
@@ -57,6 +59,7 @@ const routes = [{
             import ('@/views/Parking/ParkingDetail'),
         meta: {
             requireAuth: true,
+            keepAlive: true,
         }
     }, {
         path: '/requestList',
@@ -82,6 +85,7 @@ const routes = [{
             import ('@/views/home/Home'),
         meta: {
             requireAuth: true,
+            keepAlive: true,
         }
     },
     {

@@ -1,6 +1,6 @@
 <template>
   <div id="notifications">
-    <goHome />
+    <goHome/>
     <van-nav-bar title="Notifications" left-arrow @click-left="$router.go(-1)"/>
     <div class="subnav">
       <div>
@@ -29,7 +29,12 @@
           <div class="name">{{item.fields.title}}</div>
           <div class="date">{{item.fields.date.split(' ')[0]}}</div>
           <div class="msg" v-html="item.fields.content"></div>
-          <Icon @click.stop="deleteNotice(item.pk)" type="md-trash" style="font-size:0.18rem"/>
+          <img
+            class="delete-icon"
+            @click.stop="deleteNotice(item.pk)"
+            src="@/assets/icons/delete.png"
+            alt
+          >
         </div>
       </div>
     </section>
@@ -131,6 +136,7 @@ export default {
 <style lang="less" scoped>
 #notifications {
   section {
+    
     width: 100%;
     position: relative;
     display: flex;
@@ -141,6 +147,7 @@ export default {
 
     .content {
       padding-left: 0.15rem;
+      line-height: 1.8;
 
       & > div {
         .date {
@@ -155,14 +162,16 @@ export default {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+          width: 2.5rem;
         }
       }
     }
 
-    img {
+    &>img {
       border-radius: 50%;
       width: 0.57rem;
       height: 0.57rem;
+      display: inline-block;
     }
   }
 

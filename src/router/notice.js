@@ -12,6 +12,7 @@ const routes = [{
         import ('@/views/notifications/Notifications'),
     meta: {
         requireAuth: true,
+        keepAlive: true,
     }
 }, {
     path: '/news',
@@ -20,6 +21,7 @@ const routes = [{
         import ('@/views/notifications/News'),
     meta: {
         requireAuth: true,
+        keepAlive: true,
     }
 }, {
     path: '/view-news/:nid',
@@ -28,6 +30,7 @@ const routes = [{
         import ('@/views/notifications/ViewNews'),
     meta: {
         requireAuth: true,
+        keepAlive: true,
     }
 }];
 export default routes

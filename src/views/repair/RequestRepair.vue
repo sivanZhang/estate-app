@@ -40,11 +40,11 @@
     <div class="date-time">
       <div @click.capture="pickStart(1)">
         <img src="@/assets/icons/date.png" alt="">
-        <input type="text" :value="startTime" placeholder="Start Date and time" disabled>
+        <input style="font-size: .11rem;" type="text" :value="startTime" placeholder="Start Date and time" disabled>
       </div>
       <div @click.capture="pickStart(2)">
         <img src="@/assets/icons/date.png" alt="">
-        <input type="text" :value="endTime" placeholder="End date and time" disabled>
+        <input style="font-size: .11rem;" type="text" :value="endTime" placeholder="End date and time" disabled>
       </div>
       <!-- <div>    
         <DatePicker
@@ -106,10 +106,13 @@
         PropertyData: []
       };
     },
-    activated() {
+    created() {
       GET_Property().then(res => {
         this.PropertyData = res.data;
         this.radio = this.PropertyData[0].id;
+        if(!this.PropertyData){
+          this.$toast('No property');
+        }
       });
     },
     methods: {
@@ -232,7 +235,6 @@
       justify-content: space-between;
       &>div {
         border:.01rem solid #c8c8c8;
-        width: 1.5rem;
         height: .39rem;
         display: flex;
         align-items: center;
@@ -243,6 +245,9 @@
         }
         input{
           background: none;
+        }
+        &:last-of-type{
+          margin-left: .06rem;
         }
       }
 
@@ -307,11 +312,11 @@
 
     h3 {
       font-size: 0.15rem;
-      height: 0.46rem;
+      line-height: 2;
+      margin-top: .1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 0.04rem;
 
       &.note {
         justify-content: flex-start;
@@ -336,7 +341,7 @@
 
       &>div {
         padding: 0 0.1rem;
-        margin-bottom: 0.3rem;
+        margin: 0.1rem 0;
         display: flex;
         justify-content: space-between;
         flex-flow: row wrap;
